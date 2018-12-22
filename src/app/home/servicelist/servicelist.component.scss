@@ -1,0 +1,18 @@
+.servicelst-container{
+  .card{
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border:none;
+    padding: 15px 20px;
+    cursor: pointer;
+    p{
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+  }
+  // .col-md-2{
+  //   background: #fff;
+  //   min-height: 130px;
+  //   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  //   border-radius: 3px;
+  // }
+}

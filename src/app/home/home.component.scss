@@ -1,0 +1,16 @@
+.banner-container{
+  position: relative;
+  .caption{
+    padding-top: 75px;
+    position: absolute;
+    top: 20%;
+    color: #fff;
+    font-size: 3.429em;
+    font-weight: 300;
+    text-transform: uppercase;
+    width: 40%;
+    strong{
+      font-weight: 700;
+    }
+  }
+}
