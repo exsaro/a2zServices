@@ -3,11 +3,56 @@
     <div class="row justify-content-center">
       <div class="col-md-5">
         <div class="card p-3">
-          sads
+            <h3>Log in</h3>
+            <form #loginForm="ngForm">
+                <div class="form-group">
+                  <label for="loginMail">Email</label>
+                  <input type="email" class="form-control" name="loginEmail" id="loginMail" [ngClass]="{'is-invalid': loginEmail.invalid && loginEmail.touched}" #loginEmail="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
+                  <div *ngIf="loginEmail.invalid && loginEmail.touched" class="invalid-feedback">Please enter valid email address</div>
+                </div>
+                <div class="form-group">
+                  <label for="loginPass">Password</label>
+                  <input type="password" class="form-control" name="loginPass" id="loginPass" [ngClass]="{'is-invalid': loginPass.invalid && loginPass.touched}" #loginPass="ngModel" ngModel placeholder="Password" required>
+                  <div *ngIf="loginPass.invalid && loginPass.touched" class="invalid-feedback">Please enter valid email address</div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+                  </div>
+            </form>
         </div>
       </div>
       <div class="col-md-5">
-        <div class="card p-3">asd</div>
+        <div class="card p-3">
+          <h3>Sign up</h3>
+          <form #regForm="ngForm" name="form" autocomplete="off" (ngSubmit)="registerForm(regForm)">
+            <div class="form-group">
+              <label for="fname">First name</label>
+              <input type="text" class="form-control"  name="firstName" [ngClass]="{'is-invalid': firstname.invalid && firstname.touched}" #firstname="ngModel" ngModel placeholder="First name" required>
+              <div *ngIf="firstname.invalid && firstname.touched" class="invalid-feedback">Please enter valid first name</div>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name</label>
+              <input type="text" class="form-control" name="lastname" [ngClass]="{'is-invalid': lastname.invalid && lastname.touched}" #lastname="ngModel" ngModel id="lname" placeholder="Last name" required>
+              <div *ngIf="lastname.invalid && lastname.touched" class="invalid-feedback">Please enter valid last name</div>
+            </div>
+            <div class="form-group">
+              <label for="mail">Email</label>
+              <input type="email" class="form-control" name="email" id="mail" [ngClass]="{'is-invalid': email.invalid && email.touched}" #email="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
+              <div *ngIf="email.invalid && email.touched" class="invalid-feedback">Please enter valid email address</div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Mobile</label>
+
+              <input type="tel" class="form-control" name="mobile" #mobile="ngModel" [ngClass]="{'is-invalid': mobile.invalid && mobile.touched}" ngModel id="phone" placeholder="Mobile number" required pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$">
+              <div *ngIf="mobile.invalid && mobile.touched" class="invalid-feedback">Please enter valid mobile number</div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" [disabled]="regForm.invalid">Register</button>
+            </div>
+
+          </form>
+
+        </div>
       </div>
     </div>
   </div>
