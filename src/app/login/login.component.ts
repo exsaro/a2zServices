@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 // import { Register } from './register.model';
-import { NgForm } from '@angular/forms';
+// import { NgForm } from '@angular/forms';
 
 
 
@@ -21,13 +21,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
 
-  registerForm(form?: NgForm) {
-    console.log(form);
-
+  registerForm(x) {
+    console.log(x);
   }
 
   ngOnInit() {
-    this.registerForm();
+    // this.registerForm();
   }
   ngOnDestroy() {
     this.renderer.removeClass(document.body, 'login');

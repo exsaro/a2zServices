@@ -4,19 +4,24 @@
       <div class="col-md-5">
         <div class="card p-3">
             <h3>Log in</h3>
-            <form #loginForm="ngForm">
+            <form>
                 <div class="form-group">
                   <label for="loginMail">Email</label>
                   <input type="email" class="form-control" name="loginEmail" id="loginMail" [ngClass]="{'is-invalid': loginEmail.invalid && loginEmail.touched}" #loginEmail="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
-                  <div *ngIf="loginEmail.invalid && loginEmail.touched" class="invalid-feedback">Please enter valid email address</div>
+                  <div class="invalid-feedback" *ngIf="loginEmail.control.touched && !loginEmail.control.valid">
+                    <div *ngIf="loginEmail?.errors.required">Please enter User name</div>
+                    <div *ngIf="loginEmail?.errors.pattern">Please enter a valid User name</div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="loginPass">Password</label>
                   <input type="password" class="form-control" name="loginPass" id="loginPass" [ngClass]="{'is-invalid': loginPass.invalid && loginPass.touched}" #loginPass="ngModel" ngModel placeholder="Password" required>
-                  <div *ngIf="loginPass.invalid && loginPass.touched" class="invalid-feedback">Please enter valid email address</div>
+                  <div class="invalid-feedback" *ngIf="loginPass.control.touched && !loginPass.control.valid">
+                    <div *ngIf="loginPass?.errors.required">Please enter your password</div>
+                  </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
                   </div>
             </form>
         </div>
@@ -24,30 +29,41 @@
       <div class="col-md-5">
         <div class="card p-3">
           <h3>Sign up</h3>
-          <form #regForm="ngForm" name="form" autocomplete="off" (ngSubmit)="registerForm(regForm)">
+          <form>
             <div class="form-group">
               <label for="fname">First name</label>
-              <input type="text" class="form-control"  name="firstName" [ngClass]="{'is-invalid': firstname.invalid && firstname.touched}" #firstname="ngModel" ngModel placeholder="First name" required>
-              <div *ngIf="firstname.invalid && firstname.touched" class="invalid-feedback">Please enter valid first name</div>
+              <input type="text" class="form-control" minlength="4" [ngClass]="{'is-invalid': firstname.control.touched && !firstname.control.valid }" name="firstName" #firstname="ngModel" ngModel placeholder="First name" required>
+              <div class="invalid-feedback" *ngIf="firstname.control.touched && !firstname.control.valid">
+                <div *ngIf="firstname?.errors.required">Please enter First name</div>
+                <div *ngIf="firstname?.errors.minlength">First name should be minimum {{firstname?.errors.minlength.requiredLength}} Charecter</div>
+              </div>
             </div>
             <div class="form-group">
               <label for="lname">Last name</label>
-              <input type="text" class="form-control" name="lastname" [ngClass]="{'is-invalid': lastname.invalid && lastname.touched}" #lastname="ngModel" ngModel id="lname" placeholder="Last name" required>
-              <div *ngIf="lastname.invalid && lastname.touched" class="invalid-feedback">Please enter valid last name</div>
+              <input type="text" class="form-control" minlength="3" [ngClass]="{'is-invalid': lastname.control.touched && !lastname.control.valid }" name="lastname" #lastname="ngModel" ngModel id="lname" placeholder="Last name" required>
+              <div class="invalid-feedback" *ngIf="lastname.control.touched && !lastname.control.valid">
+                <div *ngIf="lastname?.errors.required">Please enter Last name</div>
+                <div *ngIf="lastname?.errors.minlength">Last name should be minimum {{lastname?.errors.minlength.requiredLength}} Charecter</div>
+              </div>
             </div>
             <div class="form-group">
               <label for="mail">Email</label>
-              <input type="email" class="form-control" name="email" id="mail" [ngClass]="{'is-invalid': email.invalid && email.touched}" #email="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
-              <div *ngIf="email.invalid && email.touched" class="invalid-feedback">Please enter valid email address</div>
+              <input type="email" class="form-control" name="email" [ngClass]="{'is-invalid': email.control.touched && !email.control.valid }" id="mail" #email="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
+              <div class="invalid-feedback" *ngIf="email.control.touched && !email.control.valid">
+                <div *ngIf="email?.errors.required">Please enter Email address</div>
+                <div *ngIf="email?.errors.pattern">Please enter a valid Email address</div>
+              </div>
             </div>
             <div class="form-group">
               <label for="phone">Mobile</label>
-
-              <input type="tel" class="form-control" name="mobile" #mobile="ngModel" [ngClass]="{'is-invalid': mobile.invalid && mobile.touched}" ngModel id="phone" placeholder="Mobile number" required pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$">
-              <div *ngIf="mobile.invalid && mobile.touched" class="invalid-feedback">Please enter valid mobile number</div>
+              <input type="tel" class="form-control" name="mobile" [ngClass]="{'is-invalid': mobile.control.touched && !mobile.control.valid }" #mobile="ngModel" ngModel id="phone" placeholder="Mobile number" required pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$">
+              <div class="invalid-feedback" *ngIf="mobile.control.touched && !mobile.control.valid">
+                <div *ngIf="mobile?.errors.required">Please enter Mobile number</div>
+                <div *ngIf="mobile?.errors.pattern">Please enter a valid Mobile number</div>
+              </div>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary" [disabled]="regForm.invalid">Register</button>
+              <button type="submit" class="btn btn-primary">Register</button>
             </div>
 
           </form>
