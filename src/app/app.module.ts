@@ -10,6 +10,7 @@ import { ServicelistComponent } from './home/servicelist/servicelist.component';
 import { AdminComponent } from './admin/admin.component';
 import { AddproductComponent } from './admin/addproduct/addproduct.component';
 import { ListproductComponent } from './admin/listproduct/listproduct.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ListproductComponent } from './admin/listproduct/listproduct.component'
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

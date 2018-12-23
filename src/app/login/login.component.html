@@ -4,7 +4,7 @@
       <div class="col-md-5">
         <div class="card p-3">
             <h3>Log in</h3>
-            <form>
+            <form #loginForm="ngForm">
                 <div class="form-group">
                   <label for="loginMail">Email</label>
                   <input type="email" class="form-control" name="loginEmail" id="loginMail" [ngClass]="{'is-invalid': loginEmail.invalid && loginEmail.touched}" #loginEmail="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
@@ -21,7 +21,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
                   </div>
             </form>
         </div>
@@ -29,7 +29,7 @@
       <div class="col-md-5">
         <div class="card p-3">
           <h3>Sign up</h3>
-          <form>
+          <form #regForm="ngForm" (ngSubmit)="registerForm(regForm)">
             <div class="form-group">
               <label for="fname">First name</label>
               <input type="text" class="form-control" minlength="4" [ngClass]="{'is-invalid': firstname.control.touched && !firstname.control.valid }" name="firstName" #firstname="ngModel" ngModel placeholder="First name" required>
@@ -63,7 +63,7 @@
               </div>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">Register</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!regForm.valid">Register</button>
             </div>
 
           </form>
