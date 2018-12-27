@@ -1,9 +1,11 @@
 <?php
+require __DIR__ . '../../lib/vendor/autoload.php';
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 //require '../../vendor/autoload.php';
-require '../lib/vendor/autoload.php';
+
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 
@@ -34,11 +36,12 @@ $container['signup'] = function ($container) {
     return $myService;
 };
 $app->post('/signup', function (Request $request, Response $response, array $args) {
-    $data = $request->getParsedBody();
-   /* $this->logger->addInfo("Ticket list");
+    $req = $request->getParsedBody();
+    $data = json_decode($req, true);
+       /* $this->logger->addInfo("Ticket list");
     $mapper = new TicketMapper($this->db);
     $tickets = $mapper->getTickets();*/
-    $response->getBody()->write("Hello, $data");
+    $response->getBody()->write("Hello,".$data["name"]);
 
     return $response;
 });
