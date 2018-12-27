@@ -8,14 +8,14 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
-
+/*
 $config['db']['host']   = 'localhost';
 $config['db']['user']   = 'root';
 $config['db']['pass']   = 'Welcome@747';
 $config['db']['dbname'] = 'atozservice_db';
-
+*/
 $app = new \Slim\App(['settings' => $config]);
-$container = $app->getContainer();
+/*$container = $app->getContainer();
 
 $container['logger'] = function($c) {
     $logger = new \Monolog\Logger('my_logger');
@@ -30,7 +30,7 @@ $container['db'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
-};
+};*/
 $app->group('/api', function () use ($app) {
     // Version group
     $app->group('/v1', function () use ($app) {
