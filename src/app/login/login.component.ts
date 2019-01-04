@@ -12,6 +12,7 @@ import { SignupserviceService } from './signupservice.service';
 export class LoginComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:max-line-length
   emailpattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  errMesg = false;
 
   constructor(private renderer: Renderer2, private signupservice: SignupserviceService) {
     this.renderer.addClass(document.body, 'login');
@@ -21,6 +22,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.signupservice.postData(x.value).subscribe(response => {
       console.log(response);
       x.reset();
+    }, error => {
+      this.errMesg = true;
+      console.log('Error ' + error);
     });
   }
 

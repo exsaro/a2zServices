@@ -9,14 +9,9 @@ import { ListproductComponent } from './admin/listproduct/listproduct.component'
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent},
-  {
-    path: 'admin',
-    component: AdminComponent,
-    children: [
-      {path: 'addproduct', component: AddproductComponent},
-      {path: 'listproduct', component: ListproductComponent},
-    ]
-  },
+  { path: 'admin', component: AdminComponent},
+  { path: 'addproduct', component: AddproductComponent},
+  { path: 'listproduct', component: ListproductComponent},
   { path: '**', component: HomeComponent}
 ];
 

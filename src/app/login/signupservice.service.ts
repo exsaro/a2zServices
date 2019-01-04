@@ -9,13 +9,10 @@ export class SignupserviceService {
 
   constructor(private http: HttpClient) { }
 
-  // regData(gData) {
-  //   return this.http.get('http://localhost:5555/user');
-  // }
-  postData(pData) {
-    return this.http.post('http://localhost:5555/user', pData);
+  url = 'http://ebz.in:88/a2z/src/public/api/v1/create';
+
+  postData(pData: any) {
+    return this.http.post(this.url, pData);
   }
-
-
 
 }
