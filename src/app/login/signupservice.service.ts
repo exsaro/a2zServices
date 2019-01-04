@@ -9,10 +9,10 @@ export class SignupserviceService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'http://ebz.in:88/a2z/src/public/api/v1/create';
+  regUrl = 'http://ebz.in:88/a2z/src/public/api/v1/create';
 
   postData(pData: any) {
-    return this.http.post(this.url, pData);
+    return this.http.post(this.regUrl, pData);
   }
 
 }
