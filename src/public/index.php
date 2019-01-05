@@ -15,6 +15,19 @@ $config['db']['pass']   = 'Welcome@747';
 $config['db']['dbname'] = 'atozservice_db';
 */
 $app = new \Slim\App(['settings' => $config]);
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
+$app->add(function ($req, $res, $next) {
+    $response = $next($req, $res);
+    return $response
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+});
+
 /*$container = $app->getContainer();
 
 $container['logger'] = function($c) {
@@ -37,14 +50,14 @@ $app->group('/api', function () use ($app) {
 		//$app->get('/employees', 'getEmployes');
 		//$app->get('/employee/{id}', 'getEmployee');
 		$app->post('/create', 'addcustomer');
-		//$app->put('/update/{id}', 'updateEmployee');
+		$app->post('/login', 'cust_login');
 		//$app->delete('/delete/{id}', 'deleteEmployee');
 	});
 });
 function getConnection() {
     $dbhost="localhost";
-    $dbuser="root";
-    $dbpass="Welcome@747";
+    $dbuser="a2zuser";
+    $dbpass="Welcome*1";
     $dbname="atozservice_db";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -63,24 +76,91 @@ function getConnection() {
 
     return $req;
 });*/
-function addcustomer($request) {
-    $cust = json_decode($request->getBody());
-	$response = array();
-    $sql = "INSERT INTO cust_sign_tbl (fname, lname, email_id,mobile) VALUES (:fname, :lname, :email, :mobile)";
+
+function cust_login($request , $resp) {
+    $login = json_decode($request->getBody());
+    $response = array();
+    $pwd = md5($login->pwd);
+    $sql = "SELECT * FROM cust_sign_tbl WHERE email_id= :email and pwd= :pwd";
     try {
      $db = getConnection();
+        $stmt =$db->prepare($sql);
+        $stmt->bindParam("email", $login->email);
+        $stmt->bindParam("pwd", $pwd);
+        $stmt->execute();
+        $res = $stmt->fetch();
+       
+        $response["status"] = "Success";
+        $response["Code"] = "200";
+        $response["Result"] = $res;
+        $db = null;
+       return $resp->withJson($response);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+}
+function addcustomer($request ,$resp) {
+    $cust = json_decode($request->getBody());
+    $response = array();
+    $pwd = md5($cust->pwd);
+	
+    $sql = "INSERT INTO cust_sign_tbl (fname, lname, email_id, pwd, mobile) VALUES (:fname, :lname, :email, :pwd, :mobile)";
+    try {
+		if (verify_email($cust->email)){
+		$db = getConnection();
         $stmt =$db->prepare($sql);
         $stmt->bindParam("fname", $cust->fname);
         $stmt->bindParam("lname", $cust->lname);
         $stmt->bindParam("email", $cust->email);
+        $stmt->bindParam("pwd", $pwd);
         $stmt->bindParam("mobile", $cust->mobile);
         $stmt->execute();
-        $response["id"] = $db->lastInsertId();
-       $db = null;
-        echo json_encode($response);
+        $response["id"] = "Customer Registered Successfully";
+        $response["status"] = "Success";
+        $response["Code"] = "200";
+		
+		}else{
+		$response["Result"] = "Email Id Already Registered";
+        $response["status"] = "Success";
+        $response["Code"] = "201";
+	}
+        $db = null;
+		$response["verify"] = verify_email($cust->email);
+		//$response = json_encode($response);
+        return $resp->withJson($response);	        
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
+	
+	
 }
+function verify_email($email){
+	
+     $sql = "SELECT email_id FROM cust_sign_tbl WHERE email_id= :email";
+    try {
+     $db = getConnection();
+        $stmt =$db->prepare($sql);
+        $stmt->bindParam("email", $email);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+		if ($count > 0){
+        $response = false;
+        		}
+		else{
+		$response = true;
+		}
+       $db = null;
+       return $response;
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+}
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($req, $res) {
+    $handler = $this->notFoundHandler; // handle using the default Slim page not found handler
+    return $handler($req, $res);
+});
+
 $app->run();
 ?>
