@@ -1,6 +1,7 @@
 {
     "require": {
         "slim/slim": "3.0",
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+        "tuupola/slim-jwt-auth": "^3.1"
     }
 }

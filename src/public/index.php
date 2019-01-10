@@ -3,6 +3,9 @@ require __DIR__ . '../../lib/vendor/autoload.php';
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+require_once('/Middleware/settings.php');
+use \Firebase\JWT\JWT;
+
 
 //require '../../vendor/autoload.php';
 
@@ -19,6 +22,9 @@ $app = new \Slim\App(['settings' => $config]);
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
+
+
+//$app->add(new \TokenAuth());
 
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
@@ -88,12 +94,19 @@ function cust_login($request , $resp) {
         $stmt->bindParam("email", $login->email);
         $stmt->bindParam("pwd", $pwd);
         $stmt->execute();
-        $res = $stmt->fetch();
-       
+        $count = $stmt->rowCount();
+        $res = $stmt->fetchAll();
+
+        if ($count > 0){
+   
+        $response["token"] = JWT::encode(['id' => $res->id, 'email' => $res->email], $settings['jwt']['secret'], "HS256");
         $response["status"] = "Success";
         $response["Code"] = "200";
-        $response["Result"] = $res;
-        $db = null;
+       
+                 
+    }
+    $response["Result"] = $res;
+    $db = null;
        return $resp->withJson($response);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
@@ -116,7 +129,7 @@ function addcustomer($request ,$resp) {
         $stmt->bindParam("pwd", $pwd);
         $stmt->bindParam("mobile", $cust->mobile);
         $stmt->execute();
-        $response["id"] = "Customer Registered Successfully";
+        $response["Result"] = "Customer Registered Successfully";
         $response["status"] = "Success";
         $response["Code"] = "200";
 		
