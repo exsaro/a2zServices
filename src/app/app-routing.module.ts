@@ -5,13 +5,22 @@ import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { AddproductComponent } from './admin/addproduct/addproduct.component';
 import { ListproductComponent } from './admin/listproduct/listproduct.component';
+import { EnquiryComponent } from './enquiry/enquiry.component';
+import { AuthGuardGuard } from './auth-guard.guard';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent},
+  { path: 'signup', component: SignupComponent},
+  {
+    path: 'enquiry',
+    component: EnquiryComponent,
+    canActivate: [AuthGuardGuard]
+  },
   { path: 'admin', component: AdminComponent},
-  { path: 'addproduct', component: AddproductComponent},
-  { path: 'listproduct', component: ListproductComponent},
+  { path: 'addproduct', component: AddproductComponent, canActivate: [AuthGuardGuard]},
+  { path: 'listproduct', component: ListproductComponent, canActivate: [AuthGuardGuard]},
   { path: '**', component: HomeComponent}
 ];
 
@@ -21,4 +30,11 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routingComponents = [HomeComponent, LoginComponent, AdminComponent, AddproductComponent, ListproductComponent];
+export const routingComponents = [
+  HomeComponent,
+  LoginComponent,
+  SignupComponent,
+  AdminComponent,
+  AddproductComponent,
+  ListproductComponent
+];

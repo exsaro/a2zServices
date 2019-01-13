@@ -1,0 +1,63 @@
+<section class="my-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="card p-3">
+          <div class="alert alert-danger" role="alert" *ngIf="errMesg">Something went wrong, please try after sometime</div>
+          <div class="alert alert-warning" role="alert" *ngIf="regRes['Result']">{{regRes['Result']}}</div>
+          <div class="alert alert-success" role="alert" *ngIf="regRes['id']">{{regRes['id']}}</div>
+          <h3>Sign up</h3>
+
+          <form #regForm="ngForm" (ngSubmit)="registerForm(regForm)">
+            <div class="form-group">
+              <label for="fname">First name</label>
+              <input type="text" class="form-control" minlength="4" [ngClass]="{'is-invalid': fname.control.touched && !fname.control.valid }" name="fname" #fname="ngModel" ngModel placeholder="First name" required>
+              <div class="invalid-feedback" *ngIf="fname.control.touched && !fname.control.valid">
+                <div *ngIf="fname?.errors.required">Please enter First name</div>
+                <div *ngIf="fname?.errors.minlength">First name should be minimum {{fname?.errors.minlength.requiredLength}} Charecter</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last name</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': lname.control.touched && !lname.control.valid }" name="lname" #lname="ngModel" ngModel id="lname" placeholder="Last name" required>
+              <div class="invalid-feedback" *ngIf="lname.control.touched && !lname.control.valid">
+                <div *ngIf="lname?.errors.required">Please enter Last name</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mail">Email</label>
+              <input type="email" class="form-control" name="email" [ngClass]="{'is-invalid': email.control.touched && !email.control.valid }" id="mail" #email="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
+              <div class="invalid-feedback" *ngIf="email.control.touched && !email.control.valid">
+                <div *ngIf="email?.errors.required">Please enter Email address</div>
+                <div *ngIf="email?.errors.pattern">Please enter a valid Email address</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pass">Password</label>
+              <input type="password" class="form-control" name="pwd" minlength="6" maxlength="10" [ngClass]="{'is-invalid': pwd.control.touched && !pwd.control.valid }" id="pass" #pwd="ngModel" ngModel placeholder="Password" required>
+              <div class="invalid-feedback" *ngIf="pwd.control.touched && !pwd.control.valid">
+                <div *ngIf="pwd?.errors.required">Please enter Your Password</div>
+                <div *ngIf="pwd?.errors.minlength">Password should be minimum {{pwd?.errors.minlength.requiredLength}} Charecters</div>
+                <div *ngIf="pwd?.errors.maxlength">Password allowed maximum {{pwd?.errors.maxlength.requiredLength}} Charecters</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Mobile</label>
+              <input type="tel" class="form-control" name="mobile" [ngClass]="{'is-invalid': mobile.control.touched && !mobile.control.valid }" #mobile="ngModel" ngModel id="phone" placeholder="Mobile number" required pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$">
+              <div class="invalid-feedback" *ngIf="mobile.control.touched && !mobile.control.valid">
+                <div *ngIf="mobile?.errors.required">Please enter Mobile number</div>
+                <div *ngIf="mobile?.errors.pattern">Please enter a valid Mobile number</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" [disabled]="!regForm.valid">Register</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

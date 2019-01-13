@@ -9,10 +9,16 @@ export class SignupserviceService {
 
   constructor(private http: HttpClient) { }
 
-  regUrl = 'http://ebz.in:88/a2z/src/public/api/v1/create';
+  BASE_URL = 'http://ebz.in:88/a2z/src/public/api/v1';
+  tockn = '';
 
   postData(pData: any) {
-    return this.http.post(this.regUrl, pData);
+    return this.http.post(this.BASE_URL + '/create', pData);
   }
+
+  login(lData: any) {
+    return this.http.post(this.BASE_URL + '/login', lData);
+  }
+
 
 }
