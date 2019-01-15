@@ -3,10 +3,10 @@ require __DIR__ . '../../lib/vendor/autoload.php';
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-require_once('Middleware/settings.php');
+//require_once('Middleware/settings.php');
 use \Firebase\JWT\JWT;
 
-
+$config['jwt'] =  ['secret' => 'supersecretkeyyoushouldnotcommittogithub'];
 //require '../../vendor/autoload.php';
 
 $config['displayErrorDetails'] = true;
