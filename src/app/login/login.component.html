@@ -5,7 +5,7 @@
         <div class="card p-3">
             <h3>Log in</h3>
             <div class="alert alert-danger" role="alert" *ngIf="errMesg">{{errMessage}}</div>
-            <form #loginForm="ngForm" (ngSubmit)="loggedIn(loginForm)">
+            <form #loginForm="ngForm" (ngSubmit)="loggedIn(loginForm.value)">
                 <div class="form-group">
                   <label for="loginMail">Email</label>
                   <input type="email" class="form-control" name="email" id="loginMail" [ngClass]="{'is-invalid': email.invalid && email.touched}" #email="ngModel" [pattern]="emailpattern" ngModel placeholder="Email Address" required>

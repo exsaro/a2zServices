@@ -13,11 +13,13 @@ export class AuthGuardGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-      if (this.loginservice.tockn !== '') {
+      if (this.loginservice.tockn !== '' || this.loginservice.tockn !== undefined || this.loginservice.tockn !== null) {
         return true;
       } else {
         return false;
       }
   }
+
+
 
 }
