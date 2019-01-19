@@ -5,8 +5,8 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 //require_once('Middleware/settings.php');
 use \Firebase\JWT\JWT;
+//use \Tuupola\Base62;
 
-$config['jwt'] =  ['secret' => 'supersecretkeyyoushouldnotcommittogithub'];
 //require '../../vendor/autoload.php';
 
 $config['displayErrorDetails'] = true;
@@ -98,8 +98,19 @@ function cust_login($request , $resp) {
         $res = $stmt->fetchAll();
 
         if ($count > 0){
-   
-        $response["token"] = JWT::encode(['id' => $res->id, 'email' => $res->email], $settings['jwt']['secret'], "HS256");
+            $base62 = new Tuupola\Base62;
+            $now = new DateTime();
+            $future = new DateTime("now +2 hours");
+           // $header =  $base62->encode(["typ"=> "JWT","alg"=> "HS256"]);
+            $jti = $base62->encode(random_bytes(16));
+            $payload = [
+                "jti" => $jti,
+                "iat" => $now->getTimeStamp(),
+                "nbf" => $future->getTimeStamp()
+            ];
+            
+            $secret = 'aMImBEhML0JXjmieK050pac1bFw3RvUP';
+        $response["token"] = JWT::encode( $payload, $secret, "HS256");
         $response["status"] = "Success";
         $response["Code"] = "200";
        
