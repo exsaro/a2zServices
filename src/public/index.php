@@ -1,12 +1,12 @@
 <?php
 require __DIR__ . '../../lib/vendor/autoload.php';
-require __DIR__ . 'Middleware/middleware.php';
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 //require_once('Middleware/settings.php');
 use \Firebase\JWT\JWT;
 //use \Tuupola\Base62;
-
+//
 //require '../../vendor/autoload.php';
 
 $config['displayErrorDetails'] = true;
@@ -22,7 +22,7 @@ $app = new \Slim\App(['settings' => $config]);
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
-
+//require __DIR__ . '/Middleware/middleware.php';
 
 //$app->add(new \TokenAuth());
 
