@@ -26,8 +26,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   loggedIn(loginData: Loginmodel) {
     const loginJsn = {'email': loginData.email, 'pwd': loginData.pwd};
     this.loginservice.login(loginJsn).subscribe(response => {
-      console.log(response);
-      this.loginservice.tockn = response['token'];
+      let resp = JSON.parse(response);
+      //console.log(resp['token']);
+      this.loginservice.tockn = resp['token'];
       this.setSession(this.loginservice.tockn);
       if (this.loginservice.tockn !== '') {
         this.route.navigate(['/enquiry']);
