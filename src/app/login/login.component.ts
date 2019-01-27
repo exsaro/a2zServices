@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { SignupserviceService } from '../signupservice.service';
 import { Loginmodel } from '../formdata-model';
 
-// import { Register } from './register.model';
-// import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   emailpattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   errMesg = false;
+  invalidLogin = false;
   errMessage = '';
 
 
@@ -24,36 +23,26 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loggedIn(loginData: Loginmodel) {
-    const loginJsn = {'email': loginData.email, 'pwd': loginData.pwd};
-    this.loginservice.login(loginJsn).subscribe(response => {
-      let resp = JSON.parse(response);
-      //console.log(resp['token']);
-      this.loginservice.tockn = resp['token'];
-      this.setSession(this.loginservice.tockn);
-      if (this.loginservice.tockn !== '') {
+    this.loginservice.login(loginData).subscribe(resp => {
+      console.log(resp['token']);
+      if (resp['token']) {
         this.route.navigate(['/enquiry']);
+        return true;
+      } else {
+        this.invalidLogin = true;
       }
-    }
-    , error => {
+      return false;
+    }, error => {
       this.errMesg = true;
       this.errMessage = error['message'];
       console.log('Error ' + error);
-    }
-    );
-  }
-
-  logOut() {
-    sessionStorage.removeItem('authorizeId');
-  }
-
-  setSession(tcn) {
-    sessionStorage.setItem('authorizeId', tcn);
-  }
-  getSession() {
-    sessionStorage.getItem('authorizeId');
+    });
   }
 
 
+  signupLink() {
+    this.route.navigate(['/signup']);
+  }
 
   ngOnInit() {
 

@@ -6,7 +6,7 @@
           <div class="alert alert-danger" role="alert" *ngIf="errMesg">Something went wrong, please try after sometime</div>
           <div class="alert alert-warning" role="alert" *ngIf="regRes['Result']">{{regRes['Result']}}</div>
           <div class="alert alert-success" role="alert" *ngIf="regRes['id']">{{regRes['id']}}</div>
-          <h3>Sign up</h3>
+          <h2 class="text-center mb-5">Sign up</h2>
 
           <form #regForm="ngForm" (ngSubmit)="registerForm(regForm)">
             <div class="form-group">
@@ -50,8 +50,9 @@
                 <div *ngIf="mobile?.errors.pattern">Please enter a valid Mobile number</div>
               </div>
             </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary" [disabled]="!regForm.valid">Register</button>
+            <div class="form-group d-flex justify-content-between align-item-center">
+              <a href="" class="text-uppercase text-primary"><strong>Back</strong></a>
+              <button type="submit" class="btn btn-secondary text-uppercase" [disabled]="!regForm.valid">Register</button>
             </div>
 
           </form>

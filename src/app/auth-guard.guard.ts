@@ -10,16 +10,11 @@ export class AuthGuardGuard implements CanActivate {
 
   constructor(private loginservice: SignupserviceService) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-      if (this.loginservice.tockn !== '' || this.loginservice.tockn !== undefined || this.loginservice.tockn !== null) {
-        return true;
-      } else {
+  canActivate() {
+      if (!this.loginservice.tockn) {
         return false;
+      } else {
+        return true;
       }
-  }
-
-
-
+    }
 }

@@ -3,8 +3,9 @@
     <div class="row justify-content-center">
       <div class="col-md-5 p-0">
         <div class="card p-3">
-            <h3>Log in</h3>
-            <div class="alert alert-danger" role="alert" *ngIf="errMesg">{{errMessage}}</div>
+            <h2 class="text-center mb-5">Log in</h2>
+            <div class="alert alert-danger mt-3" role="alert" *ngIf="errMesg">{{errMessage}}</div>
+            <div class="alert alert-danger mt-3" role="alert" *ngIf="invalidLogin">Please enter a valid Username and Password</div>
             <form #loginForm="ngForm" (ngSubmit)="loggedIn(loginForm.value)">
                 <div class="form-group">
                   <label for="loginMail">Email</label>
@@ -22,15 +23,17 @@
                     <div *ngIf="pwd?.errors.required">Please enter your password</div>
                   </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+                <div class="form-group text-right d-flex justify-content-between align-item-center">
+                    <a href="" class="text-uppercase "><strong>Forgot password</strong></a>
+                    <button type="submit" class="btn btn-primary text-uppercase" [disabled]="!loginForm.valid">Login</button>
                   </div>
             </form>
         </div>
       </div>
-      <div class="col-md-3 p-0">
-        <div class="card p-3">
-          <a routerLink="/signup">Signup</a>
+      <div class="col-md-3 p-0 signup">
+        <div class="card p-3 h-100 justify-content-center">
+          <h2 class="text-center mb-5">Sign up</h2>
+          <button class="btn btn-secondary text-uppercase" (click)="signupLink()">Register</button>
         </div>
       </div>
 

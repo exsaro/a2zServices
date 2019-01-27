@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Loginmodel } from './formdata-model';
+import { map } from 'rxjs/operators';
+
 
 
 @Injectable({
@@ -23,8 +25,23 @@ export class SignupserviceService {
   }
 
   login(lData: Loginmodel) {
-    return this.http.post(this.BASE_URL + '/login', lData, {responseType: 'text'});
+    return this.http.post(this.BASE_URL + '/login', lData, {responseType: 'text'})
+    .pipe(map(response => {
+      const resp = JSON.parse(response);
+      if (resp.token) {
+        localStorage.setItem('authorizeId', resp.token);
+      }
+      return resp;
+    }));
   }
+
+  logOut() {
+    localStorage.removeItem('authorizeId');
+  }
+  getSession() {
+    localStorage.getItem('authorizeId');
+  }
+
 
 
 }

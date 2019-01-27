@@ -1,8 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+
+$white: #fff;
+$black: #000;
+$primary_color: #4f1a6c;
+$primary_hover_color: #350d4b;
+$secondary_color: #d31e72;
+$secondary_hover_color: #9a0e4f;
+
+$font_14: 14px;
+$font_30: 30px;
+
 body{
   background: #f3f8fc;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: $font_14;
+}
+.btn{
+  height: 48px;
+  min-width: 156px;
+  font-size: $font_14;
+  font-weight: 500;
+}
+.btn-primary{
+  background: $primary_color;
+  border: none;
+  &:hover{
+    background: $primary_hover_color;
+  }
+  &:disabled{
+    background: $primary_color;
+  }
+}
+.btn-secondary{
+  background: $secondary_color;
+  border: none;
+  &:hover{
+    background: $secondary_hover_color;
+  }
+  &:disabled{
+    background: $secondary_color;
+  }
 }
 h2{
   font-size: 1.714em;
@@ -11,7 +48,7 @@ h2{
   &:after{
     width: 50px;
     height: 2px;
-    background: #d31e72;
+    background:$secondary_color;
     position: absolute;
     content: "";
     bottom: -15px;
@@ -37,17 +74,20 @@ header{
     margin-right: 0;
   }
 }
-
 .login{
   header{
-    background: #981150;
+    background: $secondary_hover_color;
     position: static;
   }
 }
 footer{
-  background: #981150;
+  // height: 50px;
+  // position: absolute;
+  // bottom: 0;
+  // width: 100%;
+  background: $secondary_hover_color;
   p{
-    color: #fff;
+    color: $white;
     text-align: center;
   }
 }
