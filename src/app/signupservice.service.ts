@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Loginmodel } from './formdata-model';
+
 import { map } from 'rxjs/operators';
 
 
@@ -41,6 +42,10 @@ export class SignupserviceService {
   getSession() {
     localStorage.getItem('authorizeId');
   }
+
+
+
+
 
 
 

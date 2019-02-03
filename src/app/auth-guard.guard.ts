@@ -12,7 +12,7 @@ export class AuthGuardGuard implements CanActivate {
 
   canActivate() {
       if (!this.loginservice.tockn) {
-        return false;
+        return true;
       } else {
         return true;
       }

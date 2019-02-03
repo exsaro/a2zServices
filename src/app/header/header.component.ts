@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -10,9 +11,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, location: Location) { }
 
-
+  disableHeader = false;
 
   isLoggedIn() {
     const jwtHelper = new JwtHelperService();
@@ -25,7 +26,13 @@ export class HeaderComponent implements OnInit {
     return !isExpired;
   }
 
+  chkUrl() {
+    if (location.pathname === '/admin' || location.pathname === '/addproduct' || location.pathname === '/listproduct') {
+      this.disableHeader = true;
+    }
+  }
   ngOnInit() {
+    this.chkUrl();
   }
 
 }

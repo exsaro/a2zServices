@@ -9,6 +9,10 @@ export class AddproductComponent implements OnInit {
 
   constructor() { }
 
+  addService(x) {
+    console.log(x);
+  }
+
   ngOnInit() {
   }
 
