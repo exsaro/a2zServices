@@ -70,8 +70,12 @@ $app->group('/api', function () use ($app) {
 		//$app->get('/employees', 'getEmployes');
 		//$app->get('/employee/{id}', 'getEmployee');
 		$app->post('/create', 'addcustomer');
-		$app->post('/login', 'cust_login');
-		//$app->delete('/delete/{id}', 'deleteEmployee');
+        $app->post('/login', 'cust_login');
+        $app->post('/admin/addproduct', 'addproduct');
+        $app->post('/admin/listproduct', 'listproduct');
+        $app->post('/admin/delproduct', 'delproduct');
+        $app->post('/admin/editproduct', 'editproduct');
+        //$app->delete('/delete/{id}', 'deleteEmployee');
 	});
 });
 function getConnection() {
@@ -173,6 +177,152 @@ function addcustomer($request ,$resp) {
 	
 	
 }
+function check_product($product){
+	
+    $sql = "SELECT product_name FROM product_tbl WHERE product_name= :product";
+   try {
+    $db = getConnection();
+       $stmt =$db->prepare($sql);
+       $stmt->bindParam("email", $email);
+       $stmt->execute();
+       $count = $stmt->rowCount();
+       if ($count > 0){
+       $response = false;
+               }
+       else{
+       $response = true;
+       }
+      $db = null;
+      return $response;
+   } catch(PDOException $e) {
+       echo '{"error":{"text":'. $e->getMessage() .'}}';
+   }
+
+}
+function cust_login($request , $resp) {
+    $login = json_decode($request->getBody());
+    $response = array();
+    $pwd = md5($login->pwd);
+    $sql = "SELECT * FROM cust_sign_tbl WHERE email_id= :email and pwd= :pwd";
+    try {
+     $db = getConnection();
+        $stmt =$db->prepare($sql);
+        $stmt->bindParam("email", $login->email);
+        $stmt->bindParam("pwd", $pwd);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        $res = $stmt->fetchAll();
+
+        if ($count > 0){
+            $base62 = new Tuupola\Base62;
+            $now = new DateTime();
+            $future = new DateTime("now +2 hours");
+           // $header =  $base62->encode(["typ"=> "JWT","alg"=> "HS256"]);
+            $jti = $base62->encode(random_bytes(16));
+            $payload = [
+                "jti" => $jti,
+                "iat" => $now->getTimeStamp(),
+                "nbf" => $future->getTimeStamp()
+            ];
+            
+            $secret = 'aMImBEhML0JXjmieK050pac1bFw3RvUP';
+        $response["token"] = JWT::encode( $payload, $secret, "HS256");
+        $response["status"] = "Success";
+        $response["Code"] = "200";
+       
+                 
+    }
+    $response["Result"] = $res;
+    $db = null;
+       return $resp->withJson($response);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+}
+function cust_login1($request , $resp) {
+    $login = json_decode($request->getBody());
+    $response = array();
+    $pwd = md5($login->pwd);
+    $sql = "SELECT * FROM cust_sign_tbl WHERE email_id= :email and pwd= :pwd";
+    try {
+     $db = getConnection();
+        $stmt =$db->prepare($sql);
+        $stmt->bindParam("email", $login->email);
+        $stmt->bindParam("pwd", $pwd);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        $res = $stmt->fetchAll();
+
+        if ($count > 0){
+            $base62 = new Tuupola\Base62;
+            $now = new DateTime();
+            $future = new DateTime("now +2 hours");
+           // $header =  $base62->encode(["typ"=> "JWT","alg"=> "HS256"]);
+            $jti = $base62->encode(random_bytes(16));
+            $payload = [
+                "jti" => $jti,
+                "iat" => $now->getTimeStamp(),
+                "nbf" => $future->getTimeStamp()
+            ];
+            
+            $secret = 'aMImBEhML0JXjmieK050pac1bFw3RvUP';
+        $response["token"] = JWT::encode( $payload, $secret, "HS256");
+        $response["status"] = "Success";
+        $response["Code"] = "200";
+       
+                 
+    }
+    $response["Result"] = $res;
+    $db = null;
+       return $resp->withJson($response);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+}
+function cust_login($request , $resp) {
+    $login = json_decode($request->getBody());
+    $response = array();
+    $pwd = md5($login->pwd);
+    $sql = "SELECT * FROM cust_sign_tbl WHERE email_id= :email and pwd= :pwd";
+    try {
+     $db = getConnection();
+        $stmt =$db->prepare($sql);
+        $stmt->bindParam("email", $login->email);
+        $stmt->bindParam("pwd", $pwd);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        $res = $stmt->fetchAll();
+
+        if ($count > 0){
+            $base62 = new Tuupola\Base62;
+            $now = new DateTime();
+            $future = new DateTime("now +2 hours");
+           // $header =  $base62->encode(["typ"=> "JWT","alg"=> "HS256"]);
+            $jti = $base62->encode(random_bytes(16));
+            $payload = [
+                "jti" => $jti,
+                "iat" => $now->getTimeStamp(),
+                "nbf" => $future->getTimeStamp()
+            ];
+            
+            $secret = 'aMImBEhML0JXjmieK050pac1bFw3RvUP';
+        $response["token"] = JWT::encode( $payload, $secret, "HS256");
+        $response["status"] = "Success";
+        $response["Code"] = "200";
+       
+                 
+    }
+    $response["Result"] = $res;
+    $db = null;
+       return $resp->withJson($response);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+}
+
 function verify_email($email){
 	
      $sql = "SELECT email_id FROM cust_sign_tbl WHERE email_id= :email";
