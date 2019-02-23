@@ -227,7 +227,6 @@ function listproduct($request , $resp) {
 function delproduct($request , $resp, $args) {
     
     $response = array();
-    $pwd = md5($login->pwd);
     $sql = "DELETE FROM product_tbl WHERE product_name= :product_name";
     try {
      $db = getConnection();
@@ -235,16 +234,13 @@ function delproduct($request , $resp, $args) {
         $stmt->bindParam("product_name", $args['pname']);
         $stmt->execute();
         $count = $stmt->rowCount();
-        $res = $stmt->fetchAll();
+        //$res = $stmt->fetchAll();
 
-        if ($count > 0){
-        $response["Result"] = $res;
+       
+        //$response["Result"] = $res;
         $response["status"] = "Success";
         $response["Code"] = "200";
        
-                 
-    }
-   
     $db = null;
        return $resp->withJson($response);
     } catch(PDOException $e) {
