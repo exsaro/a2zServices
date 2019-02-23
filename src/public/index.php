@@ -2,6 +2,8 @@
 require __DIR__ . '../../lib/vendor/autoload.php';
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Http\Message\UploadedFileInterface as Files;
+
 use \Firebase\JWT\JWT;
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
@@ -16,6 +18,11 @@ $app->add(function ($req, $res, $next) {
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
+
+$container = $app->getContainer();
+$container['upload_directory'] = __DIR__ . '/uploads';
+
+
 /*$app->add(new \Tuupola\Middleware\JwtAuthentication([
     "path" => "/api/v1", /* or ["/api", "/admin"] 
     "ignore" => ["/api/v1/login", "/api/v1/create"],
@@ -56,10 +63,36 @@ $app->group('/api', function () use ($app) {
         $app->post('/admin/addproduct', 'addproduct');
         $app->get('/admin/listproduct', 'listproduct');
         $app->delete('/admin/delproduct/{pname}', 'delproduct');
-      // $app->post('/admin/editproduct', 'editproduct');
+       $app->put('/admin/editproduct/{pname}', 'editproduct');
+       $app->post('/admin/upload', 'uploadFile');
         //$app->delete('/delete/{id}', 'deleteEmployee');
 	});
 });
+
+function moveUploadedFile($directory, UploadedFile $uploadedFile)
+{
+    $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+    return $filename;
+}
+
+function uploadFile($request , $resp){
+    $directory = $this->get('upload_directory');
+
+    $uploadedFiles = $request->getUploadedFiles();
+
+    // handle single input with single file upload
+    $uploadedFile = $uploadedFiles['example1'];
+    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+        $filename = moveUploadedFile($directory, $uploadedFile);
+        $response->write('uploaded ' . $filename . '<br/>');
+    }
+
+}
 function getConnection() {
     $dbhost="localhost";
     $dbuser="a2zuser";
@@ -242,6 +275,32 @@ function delproduct($request , $resp, $args) {
         $response["Code"] = "200";
        
     $db = null;
+       return $resp->withJson($response);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+
+}
+function editproduct($request , $resp, $args) {
+    $product = json_decode($request->getBody());
+    $response = array();
+    $sql = "UPDATE product_tbl SET product_status= :product_status WHERE product_name= :product_name";
+    try {
+     $db = getConnection();
+        $stmt =$db->prepare($sql);
+        $stmt->bindParam("product_name", $args['pname']);
+        $stmt->bindParam("product_status", $product->product_status);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if ($count > 0){
+            $response["status"] = "Success";
+            $response["Code"] = "200";
+                           
+        }else{
+        $response["status"] = "Failed to update";
+        $response["Code"] = "201";
+        }
+        $db = null;
        return $resp->withJson($response);
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
