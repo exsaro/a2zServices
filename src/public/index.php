@@ -2,7 +2,7 @@
 require __DIR__ . '../../lib/vendor/autoload.php';
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \Psr\Http\Message\UploadedFileInterface as Files;
+//use \Psr\Http\Message\UploadedFileInterface as files;
 
 use \Firebase\JWT\JWT;
 $config['displayErrorDetails'] = true;
@@ -19,8 +19,8 @@ $app->add(function ($req, $res, $next) {
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
 
-$container = $app->getContainer();
-$container['upload_directory'] = __DIR__ . '/uploads';
+// $container = $app->getContainer();
+// $container['upload_directory'] = __DIR__ . '/uploads';
 
 
 /*$app->add(new \Tuupola\Middleware\JwtAuthentication([
@@ -56,6 +56,7 @@ $container['db'] = function ($c) {
 $app->group('/api', function () use ($app) {
     // Version group
     $app->group('/v1', function () use ($app) {
+       
 		//$app->get('/employees', 'getEmployes');
 		//$app->get('/employee/{id}', 'getEmployee');
 		$app->post('/create', 'addcustomer');
@@ -63,13 +64,32 @@ $app->group('/api', function () use ($app) {
         $app->post('/admin/addproduct', 'addproduct');
         $app->get('/admin/listproduct', 'listproduct');
         $app->delete('/admin/delproduct/{pname}', 'delproduct');
-       $app->put('/admin/editproduct/{pname}', 'editproduct');
-       $app->post('/admin/upload', 'uploadFile');
+        $app->put('/admin/editproduct/{pname}', 'editproduct');
+       $app->post('/admin/upload', 'upload');
         //$app->delete('/delete/{id}', 'deleteEmployee');
 	});
 });
+function upload(Request $request, Response $response)
+    {
+        $files = $request->getUploadedFiles();
+        $directory = __DIR__ . '/uploads';
+        if (empty($files['file'])) {
+            throw new \RuntimeException('Expected a newfile');
+        }
 
-function moveUploadedFile($directory, UploadedFile $uploadedFile)
+        $file = $files['file'];
+
+        if ($file->getError() === UPLOAD_ERR_OK) {
+        //   $fileN = $file->getClientFilename();
+          //  $file->moveTo(storage_path("/images/{$fileName}"));
+          $filename = moveUploadedFile($directory, $file);
+            return $response->withJson($result['fileName'] = $filename)->withStatus(200);
+        }
+
+        return $response
+            ->withJson($error = 'Nothing was uploaded')->withStatus(415);
+    };
+function moveUploadedFile($directory, $uploadedFile)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
     $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
@@ -80,19 +100,19 @@ function moveUploadedFile($directory, UploadedFile $uploadedFile)
     return $filename;
 }
 
-function uploadFile($request , $resp){
-    $directory = $this->get('upload_directory');
+// function uploadFile($request , $resp){
+//     $directory = __DIR__ . '/uploads';
 
-    $uploadedFiles = $request->getUploadedFiles();
+//     $uploadedFiles = $request->getUploadedFiles();
 
-    // handle single input with single file upload
-    $uploadedFile = $uploadedFiles['example1'];
-    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-        $filename = moveUploadedFile($directory, $uploadedFile);
-        $response->write('uploaded ' . $filename . '<br/>');
-    }
+//     // handle single input with single file upload
+//     $uploadedFile = $uploadedFiles['image'];
+//     if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+//         $filename = moveUploadedFile($directory, $uploadedFile);
+//         $response->write('uploaded ' . $filename . '<br/>');
+//     }
 
-}
+// }
 function getConnection() {
     $dbhost="localhost";
     $dbuser="a2zuser";
