@@ -8,11 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuardGuard implements CanActivate {
 
-  constructor(private loginservice: SignupserviceService) {}
+  constructor(private loginservice: SignupserviceService,
+              private router:Router
+    ) {}
 
   canActivate() {
-      if (!this.loginservice.tockn) {
-        return true;
+
+      if (!this.loginservice.getSession()) {
+        this.router.navigate(['/login']);
+        return false;
       } else {
         return true;
       }

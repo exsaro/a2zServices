@@ -48,7 +48,7 @@ export class SignupserviceService {
     localStorage.removeItem('authorizeId');
   }
   getSession() {
-    localStorage.getItem('authorizeId');
+    return localStorage.getItem('authorizeId');
   }
 
 

@@ -8,9 +8,9 @@
                   <li><a routerLink="/" routerLinkActive="active">Home</a></li>
                   <li><a href="">For Business</a></li>
                   <li><a href="">Contact us</a></li>
-                  <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
-                  <li><a routerLink="/enquiry" routerLinkActive="active">Enquiry</a></li>
-                  <li><a href="">Logout</a></li>
+                  <li *ngIf="!loginService?.getSession()"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+                  <li *ngIf="loginService?.getSession()"><a routerLink="/enquiry" routerLinkActive="active">Enquiry</a></li>
+                  <li *ngIf="loginService?.getSession()"><a href="#" routerLink="/" (click)="logout($event)">Logout</a></li>
 
                   <!-- <li><a href=""><img src="../../assets/images/svg/search.svg" width="16" alt=""></a></li> -->
                 </ul>

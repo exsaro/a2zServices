@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { SignupserviceService} from '../signupservice.service';
 
 
 @Component({
@@ -11,7 +12,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private route: Router, location: Location) { }
+  constructor(private route: Router, 
+              location: Location, 
+              private loginService: SignupserviceService) { }
 
   disableHeader = false;
 
@@ -33,6 +36,12 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit() {
     this.chkUrl();
+    
+  }
+
+  public logout(e){
+    e.returnValue=true; // is equivalent to preventDefault
+    this.loginService.logOut();
   }
 
 }
