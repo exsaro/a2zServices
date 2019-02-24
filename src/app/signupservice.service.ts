@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Loginmodel } from './formdata-model';
-
 import { map } from 'rxjs/operators';
 
 
@@ -14,6 +13,7 @@ export class SignupserviceService {
   constructor(private http: HttpClient) { }
 
   BASE_URL = 'http://ebz.in:88/a2z/src/public/api/v1';
+
   tockn = '';
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -23,6 +23,14 @@ export class SignupserviceService {
 
   postData(pData: any) {
     return this.http.post(this.BASE_URL + '/create', pData);
+  }
+
+  addData(addSdata: any) {
+    return this.http.post(this.BASE_URL + '/admin/addproduct', addSdata);
+  }
+
+  listServiceData(){
+    return this.http.get(this.BASE_URL + '/admin/listproduct');
   }
 
   login(lData: Loginmodel) {

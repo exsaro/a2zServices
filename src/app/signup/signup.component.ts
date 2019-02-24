@@ -2,7 +2,6 @@ import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { SignupserviceService } from '../signupservice.service';
 
 @Component({
-
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']

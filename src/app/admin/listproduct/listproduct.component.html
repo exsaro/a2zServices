@@ -11,25 +11,12 @@
             <th>Publish</th>
             <th>Action</th>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>Electrical Service</td>
-            <td> <input type="checkbox" name="" id=""> </td>
+          <tr *ngFor="let service of servicelist">
+            <td>{{service.ID}}</td>
+            <td>{{service.product_name}}</td>
+            <td><input type="checkbox" [checked]="service.product_status === '0'"  name="" id=""> </td>
             <td><a href="">Delete</a></td>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>Electrical Service</td>
-            <td> <input type="checkbox" name="" id=""> </td>
-            <td><a href="">Delete</a></td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Electrical Service</td>
-            <td> <input type="checkbox" name="" id=""> </td>
-            <td><a href="">Delete</a></td>
-          </tr>
-
         </table>
         </div>
       </div>
