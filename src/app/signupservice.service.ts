@@ -29,7 +29,7 @@ export class SignupserviceService {
     return this.http.post(this.BASE_URL + '/admin/addproduct', addSdata);
   }
 
-  listServiceData(){
+  listServiceData() {
     return this.http.get(this.BASE_URL + '/admin/listproduct');
   }
 

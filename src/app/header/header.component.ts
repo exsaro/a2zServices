@@ -12,21 +12,23 @@ import { SignupserviceService} from '../signupservice.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private route: Router, 
-              location: Location, 
-              private loginService: SignupserviceService) { }
+  constructor(private route: Router,
+              location: Location,
+              public loginService: SignupserviceService) { }
 
   disableHeader = false;
 
   isLoggedIn() {
-    const jwtHelper = new JwtHelperService();
-    const token = localStorage.getItem('authorizeId');
-    if (!token) { return false; }
-    const expireDate = jwtHelper.getTokenExpirationDate(token);
-    const isExpired = jwtHelper.isTokenExpired(token);
-    console.log(`Exp Date: ${expireDate}`);
-    console.log(`Is Expired: ${isExpired}`);
-    return !isExpired;
+    // const jwtHelper = new JwtHelperService();
+    // const token = localStorage.getItem('authorizeId');
+    // if (!token) { return false; }
+    // const expireDate = jwtHelper.getTokenExpirationDate(token);
+    // const isExpired = jwtHelper.isTokenExpired(token);
+    // console.log(`Exp Date: ${expireDate}`);
+    // console.log(`Is Expired: ${isExpired}`);
+    // return !isExpired;
+
+    return !!localStorage.getItem('authorizeId');
   }
 
   chkUrl() {
@@ -36,11 +38,10 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit() {
     this.chkUrl();
-    
   }
 
-  public logout(e){
-    e.returnValue=true; // is equivalent to preventDefault
+  public logout(e) {
+    e.returnValue = true; // is equivalent to preventDefault
     this.loginService.logOut();
   }
 
