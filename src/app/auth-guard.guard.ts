@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { SignupserviceService } from './signupservice.service';
-import { Observable } from 'rxjs';
+import { HeaderInterceptor } from './token-intercepter.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardGuard implements CanActivate {
 
-  constructor(private loginservice: SignupserviceService) {}
+  constructor(private loginservice: SignupserviceService,
+              private router: Router,
+              private intercept: HeaderInterceptor
+    ) {}
 
   canActivate() {
-      if (!this.loginservice.tockn) {
+      if ( this.loginservice.getSession() ) {
         return true;
       } else {
-        return true;
+        this.router.navigate(['/login']);
+        return false;
       }
     }
 }

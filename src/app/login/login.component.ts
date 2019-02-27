@@ -26,12 +26,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginservice.login(loginData).subscribe(resp => {
       console.log(resp['token']);
       if (resp['token']) {
-        this.route.navigate(['/enquiry']);
+        this.route.navigate(['/home']);
         return true;
       } else {
         this.invalidLogin = true;
       }
       return false;
+
     }, error => {
       this.errMesg = true;
       this.errMessage = error['message'];
