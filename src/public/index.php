@@ -8,6 +8,10 @@ use \Firebase\JWT\JWT;
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 $app = new \Slim\App(['settings' => $config]);
+$app->add(new Tuupola\Middleware\JwtAuthentication([
+    "path" => "/api/v1/", /* or ["/api", "/admin"] */
+    "secret" => "aMImBEhML0JXjmieK050pac1bFw3RvUP"
+]));
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
@@ -83,7 +87,8 @@ function upload(Request $request, Response $response)
         //   $fileN = $file->getClientFilename();
           //  $file->moveTo(storage_path("/images/{$fileName}"));
           $filename = moveUploadedFile($directory, $file);
-            return $response->withJson($result['fileName'] = $filename)->withStatus(200);
+          $size=filesize($file->getClientFilename());
+            return $response->withJson($result['fileName'] = $size)->withStatus(200);
         }
 
         return $response
@@ -94,6 +99,9 @@ function moveUploadedFile($directory, $uploadedFile)
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
     $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
     $filename = sprintf('%s.%0.8s', $basename, $extension);
+    $extension = strtolower($extension);
+
+   
 
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
