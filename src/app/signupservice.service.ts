@@ -44,6 +44,20 @@ export class SignupserviceService {
     }));
   }
 
+  adminLogin(adminUser, adminPass){
+    if (adminUser === 'admin' && adminPass === 'admin') {
+      localStorage.setItem('authorizeAdmin', adminUser + adminPass);
+    }
+  }
+
+  adminLogout() {
+    localStorage.removeItem('authorizeAdmin');
+  }
+
+  getAdminSession() {
+    return localStorage.getItem('authorizeAdmin');
+  }
+
   logOut() {
     localStorage.removeItem('authorizeId');
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SignupserviceService } from '../signupservice.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,10 +10,11 @@ export class AdminComponent implements OnInit {
 
   title = 'Admin';
 
-  constructor() { }
+  constructor(private signupservice: SignupserviceService) { }
 
-  asd(x) {
-    console.log(x);
+  adminLogin(adminData) {
+    this.signupservice.adminLogin(adminData.controls.adminUser.value, adminData.controls.adminPass.value);
+    console.log(adminData.controls.adminUser.value + ' ' + adminData.controls.adminPass.value);
   }
 
   ngOnInit() {

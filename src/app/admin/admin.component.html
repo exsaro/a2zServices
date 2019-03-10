@@ -3,17 +3,20 @@
   <div class="row justify-content-md-center">
     <div class="col col-lg-5">
       <div class="card p-3 my-5">
-        <form>
+        <form #adminForm="ngForm" (ngSubmit)="adminLogin(adminForm)">
           <div class="form-group">
-            <label for="mail">Email address</label>
-            <input type="email" required class="form-control" id="mail" name="email" (change)="asd(email)" ngModel #email="ngModel" placeholder="Enter email">
-            <div *ngIf="!email.control.valid && email.control.touched">
-
+            <label for="adminUser">User Name</label>
+            <input type="text" class="form-control" name="adminUser" id="adminUser" [ngClass]="{'is-invalid': adminUser.invalid && adminUser.touched}" #adminUser="ngModel" ngModel placeholder="Username" required>
+            <div class="invalid-feedback" *ngIf="adminUser.control.touched && !adminUser.control.valid">
+              <div *ngIf="adminUser?.errors.required">Please enter username</div>
             </div>
           </div>
           <div class="form-group">
-            <label for="pass">Password</label>
-            <input type="password" name="password" class="form-control" id="pass" ngModel #password="ngModel" placeholder="Password">
+            <label for="adminPass">Password</label>
+            <input type="password" class="form-control" name="adminPass" id="adminPass" [ngClass]="{'is-invalid': adminPass.invalid && adminPass.touched}" #adminPass="ngModel" ngModel placeholder="Password" required>
+            <div class="invalid-feedback" *ngIf="adminPass.control.touched && !adminPass.control.valid">
+              <div *ngIf="adminPass?.errors.required">Please enter a valid password</div>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

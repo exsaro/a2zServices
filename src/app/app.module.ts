@@ -15,6 +15,7 @@ import { SignupComponent } from './signup/signup.component';
 import { HeaderInterceptor } from './token-intercepter.service';
 import { AuthGuardGuard } from './auth-guard.guard';
 import { SignupserviceService } from './signupservice.service';
+import { AdminAuthGuardGuard } from './adminauth-guard.guard';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { SignupserviceService } from './signupservice.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [AuthGuardGuard, SignupserviceService, {
+  providers: [AuthGuardGuard, SignupserviceService, AdminAuthGuardGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: HeaderInterceptor,
     multi: true
