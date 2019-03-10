@@ -19,8 +19,8 @@ const routes: Routes = [
     canActivate: [AuthGuardGuard]
 },
   { path: 'admin', component: AdminComponent },
-  { path: 'addproduct', component: AddproductComponent, canActivate: [AdminAuthGuardGuard] },
-  { path: 'listproduct', component: ListproductComponent, canActivate: [AdminAuthGuardGuard] },
+  { path: 'addproduct', component: AddproductComponent},
+  { path: 'listproduct', component: ListproductComponent},
   { path: '**', component: HomeComponent }
 ];
 

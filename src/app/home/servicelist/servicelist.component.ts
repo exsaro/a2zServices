@@ -9,6 +9,7 @@ import { SignupserviceService } from '../../signupservice.service';
 export class ServicelistComponent implements OnInit {
 
   servicelist: any = [];
+  errMsg = '';
 
   constructor(private signupservice: SignupserviceService) { }
 
@@ -20,6 +21,13 @@ export class ServicelistComponent implements OnInit {
         }
       }
       console.log(response);
+    }, err => {
+      if (err.statusText === 'Unknown Error') {
+        this.errMsg = 'Something went wrong please contact Admin.';
+      } else {
+        this.errMsg = err.message;
+      }
+      console.log(err);
     });
   }
 

@@ -29,6 +29,14 @@ export class SignupserviceService {
     return this.http.post(this.BASE_URL + '/admin/addproduct', addSdata);
   }
 
+  deleteData(prodName: string) {
+    return this.http.delete(this.BASE_URL + '/admin/delproduct/' + prodName);
+  }
+
+  updateData(prodName: string, prodStatus: number) {
+    return this.http.put(this.BASE_URL + '/admin/editproduct/' + prodName, {prodStatus});
+  }
+
   listServiceData() {
     return this.http.get(this.BASE_URL + '/admin/listproduct');
   }
@@ -44,7 +52,7 @@ export class SignupserviceService {
     }));
   }
 
-  adminLogin(adminUser, adminPass){
+  adminLogin(adminUser, adminPass) {
     if (adminUser === 'admin' && adminPass === 'admin') {
       localStorage.setItem('authorizeAdmin', adminUser + adminPass);
     }

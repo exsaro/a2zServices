@@ -15,12 +15,11 @@ export class AdminAuthGuardGuard implements CanActivate {
 
   canActivate() {
       if ( this.loginservice.getAdminSession() ) {
-        //debugger;
         this.router.navigate(['/listproduct']);
         return true;
       } else {
         this.router.navigate(['/admin']);
-        return false;
+        return true;
       }
     }
 }

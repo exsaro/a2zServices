@@ -3,6 +3,7 @@
   <div class="row">
       <div class="col-md-12">
         <div class="card p-3">
+        <div *ngIf="errMsg" class="alert alert-danger">{{errMsg}}</div>
         <h2 class="text-center mb-5">List of Service name</h2>
         <table class="table">
           <tr>
@@ -14,8 +15,8 @@
           <tr *ngFor="let service of servicelist">
             <td>{{service.ID}}</td>
             <td>{{service.product_name}}</td>
-            <td><input type="checkbox" [checked]="service.product_status === '0'"  name="" id=""> </td>
-            <td><a href="">Delete</a></td>
+            <td><input type="checkbox" (change)="changeStatus('service.product_name')" [checked]="service.product_status === '0'"  name="" id=""> </td>
+            <td><button (click)="delProd('service.product_name')">Delete</button></td>
           </tr>
         </table>
         </div>
