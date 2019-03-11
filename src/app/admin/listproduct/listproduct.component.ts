@@ -10,6 +10,7 @@ export class ListproductComponent implements OnInit {
 
   servicelist: any = [];
   errMsg = '';
+  delSucMsg = '';
 
   constructor(private signupservice: SignupserviceService) { }
 
@@ -18,7 +19,7 @@ export class ListproductComponent implements OnInit {
       this.servicelist = response['Result'];
     }, err => {
       if (err.statusText === 'Unknown Error') {
-        this.errMsg = 'Something went wrong please contact Admin.';
+        this.errMsg = 'Something went wrong please try after sometime.';
       } else {
         this.errMsg = err.message;
       }
@@ -28,12 +29,26 @@ export class ListproductComponent implements OnInit {
 
   delProd(name: string) {
     this.signupservice.deleteData(name).subscribe(response => {
+      if (response['Code'] === '200') {
+        this.delSucMsg = 'This product has been deleted Successfully';
+      }
+      this.getlistofService();
       console.log(response);
     });
+
   }
 
-  changeStatus(name) {
-    console.log(name);
+  changeStatus(name, status) {
+    if (status === '0') {
+      status = '1';
+    } else if (status === '1') {
+      status = '0';
+    }
+    this.signupservice.updateData(name, status).subscribe(response => {
+      console.log(response);
+      this.getlistofService();
+    });
+    console.log(name, status);
   }
 
   ngOnInit() {

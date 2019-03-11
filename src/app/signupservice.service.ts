@@ -33,8 +33,8 @@ export class SignupserviceService {
     return this.http.delete(this.BASE_URL + '/admin/delproduct/' + prodName);
   }
 
-  updateData(prodName: string, prodStatus: number) {
-    return this.http.put(this.BASE_URL + '/admin/editproduct/' + prodName, {prodStatus});
+  updateData(prodName, prodStatus) {
+    return this.http.put(this.BASE_URL + '/admin/editproduct/' + prodName, {'product_status': prodStatus});
   }
 
   listServiceData() {

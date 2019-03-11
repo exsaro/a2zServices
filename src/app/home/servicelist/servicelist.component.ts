@@ -23,7 +23,7 @@ export class ServicelistComponent implements OnInit {
       console.log(response);
     }, err => {
       if (err.statusText === 'Unknown Error') {
-        this.errMsg = 'Something went wrong please contact Admin.';
+        this.errMsg = 'Something went wrong please try after sometime.';
       } else {
         this.errMsg = err.message;
       }
