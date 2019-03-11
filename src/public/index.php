@@ -8,10 +8,10 @@ use \Firebase\JWT\JWT;
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 $app = new \Slim\App(['settings' => $config]);
-$app->add(new Tuupola\Middleware\JwtAuthentication([
-    "path" => "/api/v1/", /* or ["/api", "/admin"] */
-    "secret" => "aMImBEhML0JXjmieK050pac1bFw3RvUP"
-]));
+// $app->add(new Tuupola\Middleware\JwtAuthentication([
+//     "path" => "/api/v1/", /* or ["/api", "/admin"] */
+//     "secret" => "aMImBEhML0JXjmieK050pac1bFw3RvUP"
+// ]));
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
