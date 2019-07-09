@@ -5,23 +5,32 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //use \Psr\Http\Message\UploadedFileInterface as files;
 
 use \Firebase\JWT\JWT;
+use Monolog\Logger;
+use Monolog\Handler\RotatingFileHandler;
+
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 $app = new \Slim\App(['settings' => $config]);
+
+$logger = new Logger("slim");
+$rotating = new RotatingFileHandler(__DIR__ . "/logs/slim.log", 0, Logger::DEBUG);
+$logger->pushHandler($rotating);
+
+
+$app->add(new \Slim\Middleware\JwtAuthentication([
+    "path" => "/api/v1/admin", 
+    "passthrough" => ["/api/v1/create", "/api/v1/login"],
+    "logger" => $logger,
+    "secret" => "aMImBEhML0JXjmieK050pac1bFw3RvUP",
+    "algorithm" => ["HS256"]
+]));
 // $app->add(new Tuupola\Middleware\JwtAuthentication([
 //     "path" => "/api/v1/", /* or ["/api", "/admin"] */
 //     "secret" => "aMImBEhML0JXjmieK050pac1bFw3RvUP"
 // ]));
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-    return $response;
-});
-$app->add(function ($req, $res, $next) {
-    $response = $next($req, $res);
-    return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-});
+
+
+require __DIR__ . "/Middleware/middleware.php";
 
 // $container = $app->getContainer();
 // $container['upload_directory'] = __DIR__ . '/uploads';
@@ -157,7 +166,7 @@ function cust_login($request , $resp) {
                 "nbf" => $future->getTimeStamp()
             ];
             
-            $secret = 'aMImBEhML0JXjmieK050pac1bFw3RvUP';
+        $secret = 'aMImBEhML0JXjmieK050pac1bFw3RvUP';
         $response["token"] = JWT::encode( $payload, $secret, "HS256");
         $response["status"] = "Success";
         $response["Code"] = "200";
@@ -327,7 +336,9 @@ function editproduct($request , $resp, $args) {
         }else{
         $response["status"] = "Failed to update";
         $response["Code"] = "201";
+        
         }
+        $response["Count"] = $count + " " + $args['pname'] + " " +  $product->product_status;
         $db = null;
        return $resp->withJson($response);
     } catch(PDOException $e) {
