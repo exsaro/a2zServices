@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupserviceService } from '../../signupservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listproduct',
@@ -12,7 +13,7 @@ export class ListproductComponent implements OnInit {
   errMsg = '';
   delSucMsg = '';
 
-  constructor(private signupservice: SignupserviceService) { }
+  constructor(private signupservice: SignupserviceService, private router: Router) { }
 
   getlistofService() {
     this.signupservice.listServiceData().subscribe(response => {
@@ -27,6 +28,19 @@ export class ListproductComponent implements OnInit {
     });
   }
 
+  adminLogout(){
+    this.signupservice.adminLogout();
+    this.router.navigate(['/admin']);
+  }
+
+  addProducts(){
+    if (this.signupservice.getAdminSession()) {
+      this.router.navigate(['/addproduct']);
+    } else {
+      this.router.navigate(['/admin']);
+    }
+  }
+
   delProd(name: string) {
     this.signupservice.deleteData(name).subscribe(response => {
       if (response['Code'] === '200') {
@@ -38,17 +52,17 @@ export class ListproductComponent implements OnInit {
 
   }
 
-  changeStatus(name, status) {
-    if (status === '0') {
-      status = '1';
-    } else if (status === '1') {
-      status = '0';
+  changeStatus(product_name, product_status) {
+    if (product_status === 'Active') {
+      product_status = 'Inactive';
+    } else if (product_status === 'Inactive') {
+      product_status = 'Active';
     }
-    this.signupservice.updateData(name, status).subscribe(response => {
+    this.signupservice.updateData(product_name,  product_status).subscribe(response => {
       console.log(response);
       this.getlistofService();
     });
-    console.log(name, status);
+    console.log(product_name, product_status);
   }
 
   ngOnInit() {

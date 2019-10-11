@@ -7,6 +7,6 @@ export class Signupmodel {
 }
 
 export class Loginmodel {
-  email: String;
-  pwd: String;
+  'email': String;
+  'pwd': String;
 }

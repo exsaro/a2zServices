@@ -16,7 +16,7 @@ export class ServicelistComponent implements OnInit {
   listService() {
     this.signupservice.listServiceData().subscribe(response => {
       for (let i = 0; i < response['Result'].length; i++) {
-        if (response['Result'][i].product_status === '0') {
+        if (response['Result'][i].product_status === 'Active') {
           this.servicelist.push(response['Result'][i]);
         }
       }
@@ -29,6 +29,10 @@ export class ServicelistComponent implements OnInit {
       }
       console.log(err);
     });
+  }
+
+  onEnquiry(productName){
+
   }
 
 

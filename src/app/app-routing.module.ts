@@ -18,14 +18,14 @@ const routes: Routes = [
     component: EnquiryComponent,
     canActivate: [AuthGuardGuard]
 },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent},
   { path: 'addproduct', component: AddproductComponent, canActivate: [AdminAuthGuardGuard]},
   { path: 'listproduct', component: ListproductComponent, canActivate: [AdminAuthGuardGuard]},
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   registerForm(x: any) {
-      this.signupservice.postData(x.value).subscribe(response => {
+      this.signupservice.postData(JSON.stringify(x.value)).subscribe(response => {
       this.regRes = response;
       x.reset();
       console.log(response);

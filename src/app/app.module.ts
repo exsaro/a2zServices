@@ -6,16 +6,16 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ServicelistComponent } from './home/servicelist/servicelist.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { EnquiryComponent } from './enquiry/enquiry.component';
 import { SignupComponent } from './signup/signup.component';
-import { HeaderInterceptor } from './token-intercepter.service';
-import { AuthGuardGuard } from './auth-guard.guard';
-import { SignupserviceService } from './signupservice.service';
-import { AdminAuthGuardGuard } from './adminauth-guard.guard';
+// import { HeaderInterceptor } from './token-intercepter.service';
+// import { AuthGuardGuard } from './auth-guard.guard';
+// import { SignupserviceService } from './signupservice.service';
+// import { AdminAuthGuardGuard } from './adminauth-guard.guard';
 
 @NgModule({
   declarations: [
@@ -33,11 +33,7 @@ import { AdminAuthGuardGuard } from './adminauth-guard.guard';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [AuthGuardGuard, SignupserviceService, AdminAuthGuardGuard, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: HeaderInterceptor,
-    multi: true
-  }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

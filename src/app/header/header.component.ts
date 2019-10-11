@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
   }
 
   chkUrl() {
-    if (location.pathname === '/admin' || location.pathname === '/addproduct' || location.pathname === '/listproduct') {
+    if (location.pathname === '#/admin' || location.pathname === '#/addproduct' || location.pathname === '#/listproduct') {
       this.disableHeader = true;
     }
   }

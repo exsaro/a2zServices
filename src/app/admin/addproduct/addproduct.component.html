@@ -2,14 +2,19 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-5 p-0">
+            <p>
+              <button class="zindx-10" (click)="listProducts()">List Products</button>
+              <button class="zindx-10" (click)="adminLogout()">Logout</button>
+            </p>
           <div class="card p-3">
               <h2 class="text-center mb-5">Add Service name</h2>
               <div class="alert alert-danger" role="alert" *ngIf="errMesg">Something went wrong, please try after sometime</div>
               <div class="alert alert-warning" role="alert" *ngIf="warnMsg">{{warnMsg}}</div>
               <div class="alert alert-success" role="alert" *ngIf="succMsg">{{succMsg}}</div>
               <form #serviceForm="ngForm" (ngSubmit)="addService(serviceForm)">
+
                   <div class="form-group">
-                    <label for="loginMail">Service Name</label>
+                    <label for="product_name">Service Name</label>
                     <input type="text" class="form-control" name="product_name" id="product_name" [ngClass]="{'is-invalid': product_name.invalid && product_name.touched}" #product_name="ngModel" ngModel placeholder="Service Name" required>
                     <div class="invalid-feedback" *ngIf="product_name.control.touched && !product_name.control.valid">
                       <div *ngIf="product_name?.errors.required">Please enter Service name</div>
@@ -17,14 +22,18 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="publish" [value]="0" ngModel #product_status="ngModel" name="product_status" class="custom-control-input" required>
-                      <label class="custom-control-label" for="publish">Publish</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline mb-3">
-                      <input type="radio" id="notpublish" [value]="1" ngModel #product_status="ngModel" name="product_status" class="custom-control-input" required>
-                      <label class="custom-control-label" for="notpublish">Not Publish</label>
-                    </div>
+                      <label for="icon">Icon</label>
+                      <input type="file" class="form-control" id="" (change)="onFileSelect($event)" name="file" [ngClass]="{'is-invalid': file.invalid && file.touched}" #file="ngModel" ngModel>
+
+                  </div>
+
+                  <div class="form-group">
+                    <select class="custom-select" ngModel #product_status="ngModel" name="product_status" required>
+                      <option selected>Select</option>
+                      <option *ngFor="let item of publish" [value]="item">
+                        {{item}}
+                      </option>
+                    </select>
                     <div class="invalid-feedback" *ngIf="product_status.control.touched && !product_status.control.valid">
                         <div *ngIf="product_status?.errors.required">Please select the whether publish or unpublish</div>
                     </div>

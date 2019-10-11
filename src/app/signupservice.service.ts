@@ -12,16 +12,20 @@ export class SignupserviceService {
 
   constructor(private http: HttpClient) { }
 
-  BASE_URL = 'http://ebz.in:88/a2z/src/public/api/v1';
+  BASE_URL = 'http://spotbooking.in/api/public';
 
   tockn = '';
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  });
+
+  // headers = new HttpHeaders({
+  //   'Content-Type': 'application/json',
+  //   'Accept': 'application/json'
+  // });
+
+
 
 
   postData(pData: any) {
+    const headers = new HttpHeaders().set('content-Type', 'application/json');
     return this.http.post(this.BASE_URL + '/create', pData);
   }
 
@@ -30,26 +34,20 @@ export class SignupserviceService {
   }
 
   deleteData(prodName: string) {
-    return this.http.delete(this.BASE_URL + '/admin/delproduct/' + prodName);
+    return this.http.get(this.BASE_URL + '/admin/delproduct/' + prodName);
   }
 
   updateData(prodName, prodStatus) {
-    return this.http.put(this.BASE_URL + '/admin/editproduct/' + prodName, {'product_status': prodStatus});
+    const obj = { product_name: prodName, product_status: prodStatus};
+    return this.http.post(this.BASE_URL + '/admin/editproduct/', JSON.stringify(obj));
   }
 
   listServiceData() {
     return this.http.get(this.BASE_URL + '/admin/listproduct');
   }
 
-  login(lData: Loginmodel) {
-    return this.http.post(this.BASE_URL + '/login', lData, {responseType: 'text'})
-    .pipe(map(response => {
-      const resp = JSON.parse(response);
-      if (resp.token) {
-        localStorage.setItem('authorizeId', resp.token);
-      }
-      return resp;
-    }));
+  login(lData) {
+    return this.http.post(this.BASE_URL + '/login', lData);
   }
 
   adminLogin(adminUser, adminPass) {

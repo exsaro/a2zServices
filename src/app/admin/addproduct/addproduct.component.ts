@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupserviceService } from '../../signupservice.service';
+import { FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 
@@ -14,11 +16,42 @@ export class AddproductComponent implements OnInit {
   succMsg = '';
   warnMsg = '';
   serRes = {};
+  publish = ['Active', 'Inactive'];
+  addProductForm: FormGroup;
+  productData = new FormData();
 
-  constructor(private signupservice: SignupserviceService) { }
+  constructor(private signupservice: SignupserviceService, private router: Router) { }
+
+  listProducts() {
+    if (this.signupservice.getAdminSession()) {
+      this.router.navigate(['/listproduct']);
+    } else {
+      this.router.navigate(['/admin']);
+    }
+  }
+
+  adminLogout(){
+    this.signupservice.adminLogout();
+    this.router.navigate(['/admin']);
+  }
+
+  onFileSelect(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+         this.productData.set('file', file, file.name);
+      // this.addBuilderForm.get('builders_logo').setValue(file);
+    }
+  }
 
   addService(sData: any) {
-    this.signupservice.addData(sData.value).subscribe(response => {
+
+    this.productData.set('product_name', sData.value['product_name']);
+    this.productData.set('product_status', sData.value['product_status']);
+
+    console.log(this.productData);
+
+    this.signupservice.addData(this.productData).subscribe(response => {
+
       this.serRes = response;
       sData.reset();
       if(response['Code'] === '201') {
@@ -26,6 +59,7 @@ export class AddproductComponent implements OnInit {
       } else if(response['Code'] === '200') {
         this.succMsg = response['Result'];
       }
+      setTimeout(function(){ this.succMsg  = ''; }.bind(this), 4000);
       console.log(response);
     }, error => {
       this.errMesg = true;

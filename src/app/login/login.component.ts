@@ -18,21 +18,22 @@ export class LoginComponent implements OnInit, OnDestroy {
   errMessage = '';
 
 
+
   constructor(private renderer: Renderer2, private loginservice: SignupserviceService, private route: Router) {
     this.renderer.addClass(document.body, 'login');
   }
 
-  loggedIn(loginData: Loginmodel) {
-    this.loginservice.login(loginData).subscribe(resp => {
+  loggedIn(loginData) {
+    this.loginservice.login(JSON.stringify(loginData)).subscribe(resp => {
       console.log(resp['token']);
       if (resp['token']) {
+        localStorage.setItem('authorizeId', resp['token']);
         this.route.navigate(['/home']);
         return true;
       } else {
         this.invalidLogin = true;
       }
       return false;
-
     }, error => {
       this.errMesg = true;
       this.errMessage = error['message'];
