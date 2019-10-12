@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { AdminComponent } from './admin/admin.component';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -12,6 +12,8 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { EnquiryComponent } from './enquiry/enquiry.component';
 import { SignupComponent } from './signup/signup.component';
+import {HttpService} from "./services/http.service";
+
 // import { HeaderInterceptor } from './token-intercepter.service';
 // import { AuthGuardGuard } from './auth-guard.guard';
 // import { SignupserviceService } from './signupservice.service';
@@ -25,7 +27,8 @@ import { SignupComponent } from './signup/signup.component';
     routingComponents,
     ServicelistComponent,
     EnquiryComponent,
-    SignupComponent
+    SignupComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ import { SignupComponent } from './signup/signup.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [HttpService,FormsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

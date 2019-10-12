@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpService } from './services/http.service';
 import { Loginmodel } from './formdata-model';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class SignupserviceService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private httpservice:HttpService) { }
 
   BASE_URL = 'http://spotbooking.in/api/public';
 
@@ -26,34 +27,34 @@ export class SignupserviceService {
 
   postData(pData: any) {
     const headers = new HttpHeaders().set('content-Type', 'application/json');
-    return this.http.post(this.BASE_URL + '/create', pData);
+    return this.httpservice.post(this.BASE_URL + '/create', pData);
   }
 
   addData(addSdata: any) {
-    return this.http.post(this.BASE_URL + '/admin/addproduct', addSdata);
+    return this.httpservice.post(this.BASE_URL + '/admin/addproduct', addSdata);
   }
 
   deleteData(prodName: string) {
-    return this.http.get(this.BASE_URL + '/admin/delproduct/' + prodName);
+    return this.httpservice.get(this.BASE_URL + '/admin/delproduct/' + prodName);
   }
 
   updateData(prodName, prodStatus) {
     const obj = { product_name: prodName, product_status: prodStatus};
-    return this.http.post(this.BASE_URL + '/admin/editproduct/', JSON.stringify(obj));
+    return this.httpservice.post(this.BASE_URL + '/admin/editproduct/', JSON.stringify(obj));
   }
 
   listServiceData() {
-    return this.http.get(this.BASE_URL + '/admin/listproduct');
+    return this.httpservice.get(this.BASE_URL + '/admin/listproduct');
   }
 
   login(lData) {
-    return this.http.post(this.BASE_URL + '/login', lData);
+    return this.httpservice.post(this.BASE_URL + '/login', lData);
   }
 
-  adminLogin(adminUser, adminPass) {
-    if (adminUser === 'admin' && adminPass === 'admin') {
-      localStorage.setItem('authorizeAdmin', adminUser + adminPass);
-    }
+  adminLogin(loginData) {
+    
+    return this.httpservice.post(this.BASE_URL + '/login', loginData);
+    
   }
 
   adminLogout() {
