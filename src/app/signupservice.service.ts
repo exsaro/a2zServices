@@ -13,7 +13,7 @@ export class SignupserviceService {
 
   constructor(private http: HttpClient,private httpservice:HttpService) { }
 
-  BASE_URL = 'http://spotbooking.in/api/public';
+  BASE_URL = 'http://localhost:81/spotbooking.in/public';
 
   tockn = '';
 
@@ -44,6 +44,9 @@ export class SignupserviceService {
   }
 
   listServiceData() {
+    return this.httpservice.get(this.BASE_URL + '/listproduct');
+  }
+  listServiceAdminData() {
     return this.httpservice.get(this.BASE_URL + '/admin/listproduct');
   }
 
@@ -58,18 +61,18 @@ export class SignupserviceService {
   }
 
   adminLogout() {
-    localStorage.removeItem('authorizeAdmin');
+    localStorage.removeItem('Auth');
   }
 
   getAdminSession() {
-    return localStorage.getItem('authorizeAdmin');
+    return localStorage.getItem('Auth');
   }
 
   logOut() {
-    localStorage.removeItem('authorizeId');
+    localStorage.removeItem('AuthID');
   }
   getSession() {
-    return localStorage.getItem('authorizeId');
+    return localStorage.getItem('AuthID');
   }
 
 

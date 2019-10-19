@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginservice.login(JSON.stringify(loginData)).subscribe(resp => {
       console.log(resp['token']);
       if (resp['token']) {
-        localStorage.setItem('authorizeId', resp['token']);
+        localStorage.setItem('AuthID', resp['token']);
         this.route.navigate(['/home']);
         return true;
       } else {

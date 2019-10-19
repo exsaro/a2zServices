@@ -13,6 +13,8 @@ import { FooterComponent } from './footer/footer.component';
 import { EnquiryComponent } from './enquiry/enquiry.component';
 import { SignupComponent } from './signup/signup.component';
 import {HttpService} from "./services/http.service";
+import { AdminloginComponent } from './admin/adminlogin/adminlogin.component';
+import { BooknowComponent } from './booknow/booknow.component';
 
 // import { HeaderInterceptor } from './token-intercepter.service';
 // import { AuthGuardGuard } from './auth-guard.guard';
@@ -28,7 +30,9 @@ import {HttpService} from "./services/http.service";
     ServicelistComponent,
     EnquiryComponent,
     SignupComponent,
-    AdminComponent
+    AdminComponent,
+    AdminloginComponent,
+    BooknowComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,7 @@ import {HttpService} from "./services/http.service";
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [HttpService,FormsModule],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

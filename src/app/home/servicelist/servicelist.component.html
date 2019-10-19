@@ -5,7 +5,7 @@
       <div *ngIf="errMsg" class="alert alert-danger m-auto">{{errMsg}}</div>
       <div class="col-md-2" *ngFor="let service of servicelist">
         <div class="card" (click)="onEnquiry(service.product_name)">
-          <span> <img [src]="'http://spotbooking.in/'+service.pimage" width="50" alt=""> </span>
+          <span> <img [src]="'http://spotbooking.in'+service.pimage" width="50" alt=""> </span>
           <p>{{service.product_name}}</p>
         </div>
       </div>

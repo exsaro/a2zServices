@@ -16,15 +16,16 @@ export class ListproductComponent implements OnInit {
   constructor(private signupservice: SignupserviceService, private router: Router) { }
 
   getlistofService() {
-    this.signupservice.listServiceData().subscribe(response => {
+    this.signupservice.listServiceAdminData().subscribe(response => {
       this.servicelist = response['Result'];
     }, err => {
-      if (err.statusText === 'Unknown Error') {
-        this.errMsg = 'Something went wrong please try after sometime.';
-      } else {
-        this.errMsg = err.message;
+       if (err.statusText === 'Unknown Error') {
+        this.router.navigate(['/admin']);
+       // this.errMsg = 'Something went wrong please try after sometime.';
+      // } else {
+      //   this.errMsg = err.message;
       }
-      console.log(err);
+    
     });
   }
 
@@ -35,7 +36,7 @@ export class ListproductComponent implements OnInit {
 
   addProducts(){
     if (this.signupservice.getAdminSession()) {
-      this.router.navigate(['/addproduct']);
+      this.router.navigate(['/admin/addproduct']);
     } else {
       this.router.navigate(['/admin']);
     }

@@ -27,13 +27,13 @@ export class HttpService {
 
   private prepareHeader(headers: HttpHeaders | null): object {
     headers = headers || new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/json');
+   // headers = headers.set('Content-Type', 'application/json');
     const Authendication = localStorage.getItem('Auth');
     if(Authendication){
       headers = headers.set('Authorization',"Bearer " +Authendication);
     }
-   headers = headers.set('Content-Type', 'application/json');
-    headers = headers.set('Accept', 'application/json');
+  // headers = headers.set('Content-Type', 'application/json');
+   // headers = headers.set('Accept', 'application/json');
   //  headers = headers.set('observe', 'response');
     return {
         headers: headers,

@@ -9,24 +9,25 @@ import { EnquiryComponent } from './enquiry/enquiry.component';
 import { AuthGuardGuard } from './auth-guard.guard';
 import { AdminAuthGuardGuard } from './adminauth-guard.guard';
 import { SignupComponent } from './signup/signup.component';
+import { AdminloginComponent } from './admin/adminlogin/adminlogin.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent},
+  { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'enquiry',
     component: EnquiryComponent,
     canActivate: [AuthGuardGuard]
-},
-{  path: 'admin', redirectTo: 'admin/login',  pathMatch: 'full'},
-  { path: 'admin/login', component: AdminComponent},
-  { path: 'admin/addproduct', component: AddproductComponent, canActivate: [AdminAuthGuardGuard]},
-  { path: 'admin/listproduct', component: ListproductComponent, canActivate: [AdminAuthGuardGuard]},
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+}];
+const routesadmin: Routes = [{  path: 'admin', redirectTo: 'admin/login',  pathMatch: 'full'},
+  { path: 'admin/login', component: AdminloginComponent},
+  { path: 'admin/addproduct', component: AddproductComponent},
+  { path: 'admin/listproduct', component: ListproductComponent},
+  { path: '**', redirectTo: 'admin', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),RouterModule.forChild(routesadmin)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

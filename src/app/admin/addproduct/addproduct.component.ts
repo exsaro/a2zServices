@@ -24,7 +24,7 @@ export class AddproductComponent implements OnInit {
 
   listProducts() {
     if (this.signupservice.getAdminSession()) {
-      this.router.navigate(['/listproduct']);
+      this.router.navigate(['/admin/listproduct']);
     } else {
       this.router.navigate(['/admin']);
     }

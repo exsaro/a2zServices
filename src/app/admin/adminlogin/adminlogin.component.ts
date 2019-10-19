@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SignupserviceService } from '../signupservice.service';
+import { SignupserviceService } from '../../signupservice.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  selector: 'app-adminlogin',
+  templateUrl: './adminlogin.component.html',
+  styleUrls: ['./adminlogin.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminloginComponent implements OnInit {
   title = 'Admin';
   constructor(private signupservice: SignupserviceService, private router: Router) { }
 
@@ -35,7 +35,6 @@ export class AdminComponent implements OnInit {
     //console.log(adminData.controls.adminUser.value + ' ' + adminData.controls.adminPass.value);
    // this.router.navigate(['/listproduct']);
   }
-
   ngOnInit() {
     localStorage.removeItem('Auth');
   }
