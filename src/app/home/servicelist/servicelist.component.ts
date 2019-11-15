@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupserviceService } from '../../signupservice.service';
+import { EnquiryComponent } from '../../enquiry/enquiry.component';
+import {MatDialog} from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-servicelist',
@@ -11,7 +14,7 @@ export class ServicelistComponent implements OnInit {
   servicelist: any = [];
   errMsg = '';
 
-  constructor(private signupservice: SignupserviceService) { }
+  constructor(private signupservice: SignupserviceService, public dialog: MatDialog) { }
 
   listService() {
     this.signupservice.listServiceData().subscribe(response => {
@@ -32,7 +35,10 @@ export class ServicelistComponent implements OnInit {
   }
 
   onEnquiry(productName){
-
+    console.log(productName);
+  }
+  enquiryForm(){
+    this.dialog.open(EnquiryComponent);
   }
 
 

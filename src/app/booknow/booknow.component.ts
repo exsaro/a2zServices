@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+// import { EnquiryComponent } from '../enquiry/enquiry.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-booknow',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooknowComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
+
+  otp(){
+    console.log("clicked")
+  }
+
+  // backEnquiry(){
+  //   this.dialog.open(EnquiryComponent);
+  // }
 
 }

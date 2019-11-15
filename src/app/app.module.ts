@@ -15,6 +15,8 @@ import { SignupComponent } from './signup/signup.component';
 import {HttpService} from "./services/http.service";
 import { AdminloginComponent } from './admin/adminlogin/adminlogin.component';
 import { BooknowComponent } from './booknow/booknow.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
 
 // import { HeaderInterceptor } from './token-intercepter.service';
 // import { AuthGuardGuard } from './auth-guard.guard';
@@ -34,11 +36,17 @@ import { BooknowComponent } from './booknow/booknow.component';
     AdminloginComponent,
     BooknowComponent
   ],
+  entryComponents: [
+    EnquiryComponent,
+    BooknowComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]
