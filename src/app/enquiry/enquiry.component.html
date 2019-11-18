@@ -50,6 +50,7 @@
                     <div class="form-group">
                         <label for="phone">Mobile</label>
                         <input type="tel" class="form-control" name="mobile" [ngClass]="{'is-invalid': mobile.control.touched && !mobile.control.valid }" #mobile="ngModel" ngModel id="phone" placeholder="Mobile number" required pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$">
+                        <span for = "mobile"> An OTP Will be sent to the Entered Mobile Number</span>
                         <div class="invalid-feedback" *ngIf="mobile.control.touched && !mobile.control.valid">
                           <div *ngIf="mobile?.errors.required">Please enter Mobile number</div>
                           <div *ngIf="mobile?.errors.pattern">Please enter a valid Mobile number</div>
@@ -62,9 +63,9 @@
                         <textarea name="" class="form-control" id="" cols="30" rows="3"></textarea>
                     </div>
                 </div>
-                <div class="form-group d-flex justify-content-between align-item-center">
-                    <button type="submit" class="btn btn-secondary text-uppercase" (click)="enquiryForm(enqForm)" [mat-dialog-close]="true" [disabled]="!enqForm.valid">Next</button>
-                  </div>
+                <p class="text-center mt-4">
+                    <button type="submit" class="btn btn-secondary text-uppercase" (click)="enquiryForm(enqForm)" [mat-dialog-close]="true" [disabled]="!enqForm.valid">Submit</button>
+                </p>
                 </ng-template>
               </div>
           </form>

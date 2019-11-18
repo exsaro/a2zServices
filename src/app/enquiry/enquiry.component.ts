@@ -52,12 +52,13 @@ export class EnquiryComponent implements OnInit, OnDestroy {
     this.signupservice.postData(JSON.stringify(x.value)).subscribe(response => {
       this.regRes = response;
       //x.reset();
+      this.dialog.open(BooknowComponent);
       console.log(response);
     }, error => {
       this.errMesg = true;
       console.log('Error ' + error);
     });
-    this.dialog.open(BooknowComponent);
+   
   }
 
 }

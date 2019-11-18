@@ -13,7 +13,7 @@ export class SignupserviceService {
 
   constructor(private http: HttpClient,private httpservice:HttpService) { }
 
-  BASE_URL = 'http://spotbooking.in/api/public';
+  BASE_URL = 'http://localhost:81/spotbooking.in/public';
 
   tockn = '';
 
@@ -44,7 +44,7 @@ export class SignupserviceService {
   }
 
   listServiceData() {
-    return this.httpservice.get(this.BASE_URL + '/admin/listproduct');
+    return this.httpservice.get(this.BASE_URL + '/listproduct');
   }
   listServiceAdminData() {
     return this.httpservice.get(this.BASE_URL + '/admin/listproduct');
