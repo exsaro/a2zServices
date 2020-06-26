@@ -9,7 +9,7 @@ import { BooknowComponent } from '../booknow/booknow.component';
   styleUrls: ['./enquiry.component.scss']
 })
 export class EnquiryComponent implements OnInit, OnDestroy {
-
+  register  =true;
   // tslint:disable-next-line:max-line-length
   emailpattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -52,13 +52,16 @@ export class EnquiryComponent implements OnInit, OnDestroy {
     this.signupservice.postData(JSON.stringify(x.value)).subscribe(response => {
       this.regRes = response;
       //x.reset();
-      this.dialog.open(BooknowComponent);
+      //this.dialog.open(BooknowComponent);
+      this.register  =false;
+      alert(this.register);
       console.log(response);
     }, error => {
+      this.register  =true;
       this.errMesg = true;
       console.log('Error ' + error);
     });
-   
+    alert(this.register);
   }
 
 }

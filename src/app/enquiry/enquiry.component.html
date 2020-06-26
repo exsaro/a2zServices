@@ -1,6 +1,5 @@
-<section>
-
-          <h2 class="text-center mb-5">Enquiry</h2>
+<section *ngIf='register'>
+            <h2 class="text-center mb-5">Enquiry</h2>
 
           <form #enqForm="ngForm">
 
@@ -64,10 +63,32 @@
                     </div>
                 </div>
                 <p class="text-center mt-4">
-                    <button type="submit" class="btn btn-secondary text-uppercase" (click)="enquiryForm(enqForm)" [mat-dialog-close]="true" [disabled]="!enqForm.valid">Submit</button>
+                    <button type="submit" class="btn btn-secondary text-uppercase" (click)="enquiryForm(enqForm)" [disabled]="!enqForm.valid">Submit</button>
                 </p>
                 </ng-template>
               </div>
           </form>
 
+</section>
+<section *ngIf='!register'>
+  <h2 class="text-center mb-5">Verify OTP</h2>
+  <form #otp="ngForm">
+  <div class="row justify-content-center">
+    <div class="col-12">
+        <div class="form-group">
+            <label for="otp">Enter OTP</label>
+            <input type="text" class="form-control" minlength="6" maxlength="6" [ngClass]="{'is-invalid': otp.control.touched && !otp.control.valid }" name="otp" #otp="ngModel" ngModel placeholder="Enter OTP" required>
+            <div class="invalid-feedback" *ngIf="otp.control.touched && !fname.control.valid">
+              <div *ngIf="otp?.errors.required">Please enter Valid OTP</div>
+              <div *ngIf="otp?.errors.minlength">OTP should be minimum {{otp?.errors.minlength.requiredLength}} Charecter</div>
+              <div *ngIf="otp?.errors.maxlength">OTP should be maximum {{otp?.errors.maxlength.requiredLength}} Charecter</div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="form-group text-center">
+      <button type="submit" class="btn btn-secondary text-uppercase" [disabled]="!otp.valid" [mat-dialog-close]="true">Submit</button>
+  </div>
+</form>
+  <!-- <p><button (click)="backEnquiry()">This is not my Number</button></p> -->
 </section>
