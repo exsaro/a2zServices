@@ -4,9 +4,9 @@
           <form #enqForm="ngForm">
 
               <div class="row">
-                  <div *ngIf="errMsg; else showEnquiry" class="alert alert-danger m-auto">{{errMsg}}</div>
+                  <div *ngIf="errMesg; else showEnquiry" class="alert alert-danger m-auto">Something went wrong, please try again later</div>
                   <ng-template #showEnquiry>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="fname">First name</label>
                         <input type="text" class="form-control" minlength="4" [ngClass]="{'is-invalid': fname.control.touched && !fname.control.valid }" name="fname" #fname="ngModel" ngModel placeholder="First name" required>
@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="lname">Last name</label>
                         <input type="text" class="form-control" [ngClass]="{'is-invalid': lname.control.touched && !lname.control.valid }" name="lname" #lname="ngModel" ngModel id="lname" placeholder="Last name" required>
@@ -25,7 +25,7 @@
                         </div>
                       </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="mail">Email</label>
                         <input type="email" class="form-control" name="email" [ngClass]="{'is-invalid': email.control.touched && !email.control.valid }" id="mail" #email="ngModel" ngModel placeholder="Email Address" [pattern]="emailpattern" required>
@@ -35,17 +35,16 @@
                         </div>
                       </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="service">Service</label>
                         <select name="service" class="form-control" id="service" #service="ngModel" ngModel [ngClass]="{'is-invalid': service.control.touched && !service.control.valid }" required>
                           <option *ngFor="let service of servicelist" value="{{service.product_name}}">{{service.product_name}}</option>
                         </select>
                         <!-- <input type="text" class="form-control" name="service" minlength="6" maxlength="10"    placeholder="Service" > -->
-
                       </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="phone">Mobile</label>
                         <input type="tel" class="form-control" name="mobile" [ngClass]="{'is-invalid': mobile.control.touched && !mobile.control.valid }" #mobile="ngModel" ngModel id="phone" placeholder="Mobile number" required pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$">
@@ -56,7 +55,51 @@
                         </div>
                       </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="address">Flat, House no.</label>
+                      <input type="text" class="form-control" name="address" [ngClass]="{'is-invalid': address.control.touched && !address.control.valid }" #address="ngModel" ngModel id="address" placeholder="Address" required>
+                      <div class="invalid-feedback" *ngIf="address.control.touched && !address.control.valid">
+                        <div *ngIf="address?.errors.required">Please enter your Flat or House Number</div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="address1">Area, Colony, Street, Sector, Village</label>
+                      <input type="text" class="form-control" name="address1" [ngClass]="{'is-invalid': address1.control.touched && !address1.control.valid }" #address1="ngModel" ngModel id="address1" placeholder="Address 2" required>
+                      <div class="invalid-feedback" *ngIf="address1.control.touched && !address1.control.valid">
+                        <div *ngIf="address1?.errors.required">Please enter your Area</div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="address2">Landmark</label>
+                      <input type="text" class="form-control" name="address2" #address2="ngModel" ngModel id="address2" placeholder="Landmark">
+                    </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="city">City</label>
+                      <input type="text" class="form-control" name="city" [ngClass]="{'is-invalid': city.control.touched && !city.control.valid }" #city="ngModel" ngModel id="city" placeholder="City" required>
+                      <div class="invalid-feedback" *ngIf="city.control.touched && !city.control.valid">
+                        <div *ngIf="city?.errors.required">Please enter your City</div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                      <label for="pincode">Pincode</label>
+                      <input type="text" class="form-control" name="pincode" maxlength="6" [ngClass]="{'is-invalid': pincode.control.touched && !pincode.control.valid }" #pincode="ngModel" ngModel id="pincode" placeholder="Pincode" required pattern="^\d{6}$">
+                      <div class="invalid-feedback" *ngIf="pincode.control.touched && !pincode.control.valid">
+                        <div *ngIf="pincode?.errors.required">Please enter your Pincode</div>
+                        <div *ngIf="pincode?.errors.pattern">Please enter a valid Pincode</div>
+                        <div *ngIf="pincode?.errors.maxlength">Pincode should be maximum {{pincode?.errors.maxlength.requiredLength}} Charecter</div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-4">
                     <div class="form-group">
                         <label for="phone">Comments</label>
                         <textarea name="" class="form-control" id="" cols="30" rows="3"></textarea>
@@ -71,24 +114,44 @@
 
 </section>
 <section *ngIf='!register'>
+
+
+
+
   <h2 class="text-center mb-5">Verify OTP</h2>
+
   <form #otp="ngForm">
+    <div class="alert alert-success" role="alert" *ngIf="succMsg; else verify">
+      Your request Has submitted Successfully! We will contact you Soon
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errMesg">
+      Something went wrong, please request new Enquiry
+    </div>
+    <ng-template #verify>
   <div class="row justify-content-center">
+
+
     <div class="col-12">
+
+
         <div class="form-group">
             <label for="otp">Enter OTP</label>
             <input type="text" class="form-control" minlength="6" maxlength="6" [ngClass]="{'is-invalid': otp.control.touched && !otp.control.valid }" name="otp" #otp="ngModel" ngModel placeholder="Enter OTP" required>
-            <div class="invalid-feedback" *ngIf="otp.control.touched && !fname.control.valid">
+            <div class="invalid-feedback" *ngIf="otp.control.touched && !otp.control.valid">
               <div *ngIf="otp?.errors.required">Please enter Valid OTP</div>
               <div *ngIf="otp?.errors.minlength">OTP should be minimum {{otp?.errors.minlength.requiredLength}} Charecter</div>
               <div *ngIf="otp?.errors.maxlength">OTP should be maximum {{otp?.errors.maxlength.requiredLength}} Charecter</div>
             </div>
         </div>
+
     </div>
+
   </div>
   <div class="form-group text-center">
-      <button type="submit" class="btn btn-secondary text-uppercase" [disabled]="!otp.valid" [mat-dialog-close]="true">Submit</button>
+      <button type="submit" (click)="otpverify(otp)" class="btn btn-secondary text-uppercase" [disabled]="!otp.valid">Submit</button>
   </div>
+</ng-template>
 </form>
+
   <!-- <p><button (click)="backEnquiry()">This is not my Number</button></p> -->
 </section>

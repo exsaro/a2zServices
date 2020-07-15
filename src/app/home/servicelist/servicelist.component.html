@@ -3,8 +3,8 @@
     <h2 class="text-center mb-5">Our Services</h2>
     <div class="row">
       <div *ngIf="errMsg" class="alert alert-danger m-auto">{{errMsg}}</div>
-      <div class="col-md-2" *ngFor="let service of servicelist">
-        <div class="card" (click)="onEnquiry(service.product_name)">
+      <div class="col-md-2 mb-4" *ngFor="let service of servicelist">
+        <div class="card h-100 justify-content-center" (click)="onEnquiry(service.product_name)">
           <span> <img [src]="'http://spotbooking.in'+service.pimage" width="50" alt=""> </span>
           <p>{{service.product_name}}</p>
         </div>

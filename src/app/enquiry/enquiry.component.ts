@@ -20,6 +20,8 @@ export class EnquiryComponent implements OnInit, OnDestroy {
   errMsg = '';
   regRes = {};
   errMesg = false;
+  userMob = '';
+  succMsg = false;
 
   listService() {
     this.signupservice.listServiceData().subscribe(response => {
@@ -49,19 +51,36 @@ export class EnquiryComponent implements OnInit, OnDestroy {
 
 
   enquiryForm(x) {
+    console.log('addess', x.value)
+    this.userMob = x.value.mobile;
     this.signupservice.postData(JSON.stringify(x.value)).subscribe(response => {
       this.regRes = response;
-      //x.reset();
-      //this.dialog.open(BooknowComponent);
-      this.register  =false;
-      alert(this.register);
-      console.log(response);
+
+      if (response.Code === '200') {
+        this.register  = false;
+      }
+
     }, error => {
       this.register  =true;
       this.errMesg = true;
       console.log('Error ' + error);
     });
-    alert(this.register);
+    //alert(this.register);
+  }
+
+  otpverify(otp){
+    const otpDat = {
+      'mobile': this.userMob,
+      'otp': otp.value
+    };
+    this.signupservice.otpVerify(JSON.stringify(otpDat)).subscribe(res => {
+
+      if(res.Code == '200'){
+        this.succMsg = true;
+      }else{
+        this.errMesg = true;
+      }
+    });
   }
 
 }

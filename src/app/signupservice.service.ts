@@ -12,8 +12,8 @@ import { map } from 'rxjs/operators';
 export class SignupserviceService {
 
   constructor(private http: HttpClient,private httpservice:HttpService) { }
-
-  BASE_URL = 'http://localhost:81/spotbooking.in/public';
+  ///admin/listproduct
+  BASE_URL = 'http://spotbooking.in/api/public';
 
   tockn = '';
 
@@ -55,9 +55,12 @@ export class SignupserviceService {
   }
 
   adminLogin(loginData) {
-
     return this.httpservice.post(this.BASE_URL + '/login', loginData);
+  }
 
+  otpVerify(otpData){
+    const headers = new HttpHeaders().set('content-Type', 'application/json');
+    return this.httpservice.post(this.BASE_URL + '/verifyotp', otpData, headers);
   }
 
   adminLogout() {

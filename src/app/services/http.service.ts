@@ -11,7 +11,7 @@ export class HttpService {
   // get method
   public get(url: string, headers?: HttpHeaders | null): Observable<any> {
       const expandedHeaders = this.prepareHeader(headers);
-      return this.http.get<any>(url,expandedHeaders);
+      return this.http.get<any>(url, expandedHeaders);
   }
 
   // post method1
